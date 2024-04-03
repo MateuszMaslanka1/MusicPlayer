@@ -1,8 +1,9 @@
 import QtQuick
 
 Window {
-    width: 1200
+    width: 1280
     height: 720
     visible: true
     title: qsTr("Music Player")
+    Player {id: player}
 }
