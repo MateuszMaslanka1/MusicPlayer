@@ -1,5 +1,19 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <future>
+#include <string>
+#include <QDebug>
+
+void playSound(const std::string& filePath) {
+    // Skonstruuj polecenie mpg123
+    std::string command = "mpg123 ";
+    command += filePath;
+
+    // Wywołaj polecenie mpg123 za pomocą funkcji systemowej
+    qDebug() << "Starting sound playback...";
+    system(command.c_str());
+    qDebug() << "Sound playback finished.";
+}
 
 int main(int argc, char *argv[])
 {
@@ -15,5 +29,9 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
     engine.load(url);
 
+    const std::string filePath = "/home/linux/Downloads/music.mp3"; // Upewnij się, że podajesz poprawną ścieżkę i format pliku dźwiękowego
+
+    // Uruchom nowy wątek, aby odtworzyć dźwięk
+     std::future<void> soundFuture = std::async(std::launch::async, playSound, filePath);
     return app.exec();
 }
