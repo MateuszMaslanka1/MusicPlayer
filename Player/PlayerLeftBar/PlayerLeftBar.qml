@@ -13,14 +13,12 @@ Item {
             id: navContainer
             anchors.fill: parent
             color: parent.color
-            anchors.topMargin: 20
-            anchors.leftMargin: 15
-            anchors.rightMargin: 15
+            anchors.margins: 5
             Grid {
                 anchors.fill: navContainer
                 columns: 1
                 flow: GridLayout.FlowDown
-                spacing: 7
+                spacing: 5
                 ButtonComponent{
                     textForButton: 'Music'
                     widthButton: navContainer.width

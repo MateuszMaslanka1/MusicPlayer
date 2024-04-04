@@ -1,25 +1,31 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Window 2.12
 
 Item {
     property int widthButton: 150
     property int heightButton: 50
     property string textForButton: ""
+    property color colorButton: "#363434"
     width: widthButton
     height: heightButton
 
-    Button {
+    Rectangle {
         anchors.fill: parent
+        color: colorButton
+        radius: 5
         Text {
             anchors.centerIn: parent
             color: "#fff"
             text: textForButton
+            font.weight: 500
         }
 
-        background: Rectangle {
-            color: "#363434"
-            radius: 5
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: parent.color = "#808080"
+            onExited: parent.color = colorButton
         }
-
     }
 }
