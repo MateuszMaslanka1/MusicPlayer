@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
     engine.load(url);
 
-    const std::string filePath = "/home/linux/Downloads/music.mp3"; // Upewnij się, że podajesz poprawną ścieżkę i format pliku dźwiękowego
+    // const std::string filePath = "/home/linux/Downloads/music.mp3"; // Upewnij się, że podajesz poprawną ścieżkę i format pliku dźwiękowego
 
     // Uruchom nowy wątek, aby odtworzyć dźwięk
-     std::future<void> soundFuture = std::async(std::launch::async, playSound, filePath);
+     // std::future<void> soundFuture = std::async(std::launch::async, playSound, filePath);
     return app.exec();
 }

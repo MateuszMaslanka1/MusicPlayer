@@ -1,5 +1,6 @@
 import QtQuick
-
+import QtQuick.Controls 2.15
+import "./Player"
 Window {
     id: root
     width: 1280

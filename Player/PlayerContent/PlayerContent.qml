@@ -1,9 +1,10 @@
 import QtQuick 2.15
 
 Item {
+    width: player.width * 0.75
+    height: player.height
     Rectangle {
-        width: root.width * 0.5
-        height: root.height
-        color: "red"
+        anchors.fill: parent
+        color: "#202020"
     }
 }
