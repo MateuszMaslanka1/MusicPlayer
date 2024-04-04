@@ -12,8 +12,7 @@ Item {
         anchors.fill: parent
         rows: 1
         columns: 2
-        PlayerLeftBar {
-        }
+        PlayerLeftBar {}
         PlayerContent {}
     }
 }

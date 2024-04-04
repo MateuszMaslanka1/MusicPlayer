@@ -4,3 +4,7 @@
 MusicPlayer::MusicPlayer(QObject *parent) : QObject{parent} {
 
 }
+
+std::string MusicPlayer::findMusicInDirectory() {
+    return "";
+}

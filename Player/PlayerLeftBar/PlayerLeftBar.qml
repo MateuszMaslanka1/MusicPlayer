@@ -25,7 +25,7 @@ Item {
                     heightButton: 50
                 }
                 ButtonComponent{
-                    textForButton: 'Play list'
+                    textForButton: 'Playlist'
                     widthButton: navContainer.width
                     heightButton: 50
                 }
