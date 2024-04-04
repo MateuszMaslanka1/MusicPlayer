@@ -4,6 +4,7 @@ import QtQuick.Controls 2.3
 
 import "./PlayerLeftBar"
 import "./PlayerContent"
+
 Item {
     width: player.width
     height: player.height
@@ -13,8 +14,6 @@ Item {
         columns: 2
         PlayerLeftBar {
         }
-
-        PlayerContent {
-        }
+        PlayerContent {}
     }
 }
