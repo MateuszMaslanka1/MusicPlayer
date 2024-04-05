@@ -1,8 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <future>
 #include <string>
 #include <QDebug>
+#include "./MusicPlayer/musicplayer.h"
 
 void playSound(const std::string& filePath) {
     // Skonstruuj polecenie mpg123
@@ -19,6 +19,10 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+    qmlRegisterType<MusicPlayer>("com.company.musicplayer",1,0,"MusicPlayer");
+
+
+
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/MusicPlayer/Main.qml"_qs);
     QObject::connect(
@@ -28,6 +32,10 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.load(url);
+
+    MusicPlayer musicPlayer;
+
+    musicPlayer.findMusicInDirectory();
 
     // const std::string filePath = "/home/linux/Downloads/music.mp3"; // Upewnij się, że podajesz poprawną ścieżkę i format pliku dźwiękowego
 
