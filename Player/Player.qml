@@ -4,15 +4,19 @@ import QtQuick.Controls 2.3
 
 import "./PlayerLeftBar"
 import "./PlayerContent"
+import "./PlayerController"
 
 Item {
     width: player.width
     height: player.height
     Grid {
         anchors.fill: parent
-        rows: 1
+        rows: 2
         columns: 2
         PlayerLeftBar {}
         PlayerContent {}
+        PlayerController {
+
+        }
     }
 }

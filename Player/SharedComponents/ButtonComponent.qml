@@ -22,6 +22,7 @@ Item {
         }
 
         MouseArea {
+            cursorShape: Qt.PointingHandCursor
             anchors.fill: parent
             hoverEnabled: true
             onEntered: parent.color = "#808080"
