@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.15
-
+import QtQuick.Layouts 1.12
 import "../SharedComponents"
 Item {
     width: player.width * 0.25
@@ -17,7 +17,6 @@ Item {
             Grid {
                 anchors.fill: navContainer
                 columns: 1
-                flow: GridLayout.FlowDown
                 spacing: 5
                 ButtonComponent{
                     textForButton: 'Music'

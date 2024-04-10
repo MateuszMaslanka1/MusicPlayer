@@ -1,29 +1,31 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <string>
 #include <QDebug>
+#include <QQmlContext>
 #include "./MusicPlayer/musicplayer.h"
 
-void playSound(const std::string& filePath) {
-    // Skonstruuj polecenie mpg123
-    std::string command = "mpg123 ";
-    command += filePath;
+// void playSound(const std::string& filePath) {
+//     // Skonstruuj polecenie mpg123
+//     std::string command = "mpg123 ";
+//     command += filePath;
 
-    // Wywołaj polecenie mpg123 za pomocą funkcji systemowej
-    qDebug() << "Starting sound playback...";
-    system(command.c_str());
-    qDebug() << "Sound playback finished.";
-}
+//     // Wywołaj polecenie mpg123 za pomocą funkcji systemowej
+//     qDebug() << "Starting sound playback...";
+//     system(command.c_str());
+//     qDebug() << "Sound playback finished.";
+// }
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<MusicPlayer>("com.company.musicplayer",1,0,"MusicPlayer");
-
-
+    // qmlRegisterType<MusicPlayer>("com.company.musicplayer",1,0,"MusicPlayer");
 
     QQmlApplicationEngine engine;
+    MusicPlayer musicPlayer;
+    musicPlayer.findInMusicLibrary();
+    engine.rootContext()->setContextProperty("musicPlayer", &musicPlayer);
+
     const QUrl url(u"qrc:/MusicPlayer/Main.qml"_qs);
     QObject::connect(
         &engine,
@@ -33,9 +35,8 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
     engine.load(url);
 
-    MusicPlayer musicPlayer;
 
-    musicPlayer.findMusicInDirectory();
+    // musicPlayer.findMusicInDirectory();
 
     // const std::string filePath = "/home/linux/Downloads/music.mp3"; // Upewnij się, że podajesz poprawną ścieżkę i format pliku dźwiękowego
 

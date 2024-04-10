@@ -1,5 +1,4 @@
 import QtQuick 2.15
-// import "MusicLibrary"
 Item {
     width: player.width * 0.75
     height: player.height
@@ -9,7 +8,8 @@ Item {
         Rectangle {
             anchors.fill: parent
             color: "#202020"
-            anchors.leftMargin: 30;
+            anchors.topMargin: 10;
+            anchors.leftMargin: 20;
             MusicLibrary{}
         }
     }

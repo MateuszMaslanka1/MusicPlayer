@@ -2,23 +2,24 @@
 #include <filesystem>
 #include <iostream>
 #include <unistd.h>
+#include <string>
+#include <QVector>
+#include <QString>
+// MusicPlayer::MusicPlayer(QObject *parent) : QObject{parent} {
 
-MusicPlayer::MusicPlayer(QObject *parent) : QObject{parent} {
+// }
 
-}
-
-std::string MusicPlayer::findMusicInDirectory() {
+void MusicPlayer::findInMusicLibrary() {
+    QVector<QString> songList;
     char* username = getlogin();
-    std::string sciezka_katalogu = "/home/" + std::string(username) + "/Music";
-
-    if (std::filesystem::exists(sciezka_katalogu) && std::filesystem::is_directory(sciezka_katalogu)) {
-        std::cout << "jes ok sciezka_katalogu" << std::endl;
+    std::string pathToDirectory = "/home/" + std::string(username) + "/Music";
+    if (std::filesystem::exists(pathToDirectory) && std::filesystem::is_directory(pathToDirectory)) {
+        for (const auto& entry : std::filesystem::directory_iterator(pathToDirectory)) {
+            std::cout << entry.path().filename() << std::endl;
+            songList.append(QString::fromStdString(entry.path().filename()));
+        }
+        setSomeData(songList);
     } else {
-        std::cout << "nie jest ok sciezka_katalogu" << std::endl;
-        std::filesystem::create_directory(sciezka_katalogu);
+        std::filesystem::create_directory(pathToDirectory);
     }
-    for (const auto& entry : std::filesystem::directory_iterator(sciezka_katalogu)) {
-        std::cout << entry.path().filename() << std::endl;
-    }
-    return "";
 }
