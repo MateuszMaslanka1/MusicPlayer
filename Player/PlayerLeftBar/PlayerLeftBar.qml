@@ -4,8 +4,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 import "../SharedComponents"
 Item {
-    width: player.width * 0.25
-    height: player.height * 0.90
     Rectangle {
         anchors.fill: parent
         color: "#1d1d1d"
