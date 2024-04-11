@@ -3,23 +3,12 @@
 #include <QDebug>
 #include <QQmlContext>
 #include "./MusicPlayer/musicplayer.h"
-
-// void playSound(const std::string& filePath) {
-//     // Skonstruuj polecenie mpg123
-//     std::string command = "mpg123 ";
-//     command += filePath;
-
-//     // Wywołaj polecenie mpg123 za pomocą funkcji systemowej
-//     qDebug() << "Starting sound playback...";
-//     system(command.c_str());
-//     qDebug() << "Sound playback finished.";
-// }
-
+#include "./PlaySong/playsong.h"
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    // qmlRegisterType<MusicPlayer>("com.company.musicplayer",1,0,"MusicPlayer");
+    qmlRegisterType<PlaySong>("PlaySong",1,0,"PlaySong");
 
     QQmlApplicationEngine engine;
     MusicPlayer musicPlayer;
@@ -34,13 +23,5 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.load(url);
-
-
-    // musicPlayer.findMusicInDirectory();
-
-    // const std::string filePath = "/home/linux/Downloads/music.mp3"; // Upewnij się, że podajesz poprawną ścieżkę i format pliku dźwiękowego
-
-    // Uruchom nowy wątek, aby odtworzyć dźwięk
-     // std::future<void> soundFuture = std::async(std::launch::async, playSound, filePath);
     return app.exec();
 }

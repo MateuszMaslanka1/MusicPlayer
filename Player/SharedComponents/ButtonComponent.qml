@@ -7,6 +7,7 @@ Item {
     property int heightButton: 50
     property string textForButton: ""
     property color colorButton: "#363434"
+    property var functionToCall
     width: widthButton
     height: heightButton
 
@@ -27,6 +28,11 @@ Item {
             hoverEnabled: true
             onEntered: parent.color = "#808080"
             onExited: parent.color = colorButton
+            onClicked: {
+                if (functionToCall) {
+                    functionToCall();
+                }
+            }
         }
     }
 }

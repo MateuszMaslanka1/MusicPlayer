@@ -4,6 +4,7 @@ import QtQuick.Controls 2.3
 import QtMultimedia 5.15
 import QtQuick.Layouts 1.15
 import "../SharedComponents"
+import PlaySong 1.0
 
 Item {
     width: root.width
@@ -81,9 +82,13 @@ Item {
         }
 
         ButtonComponent {
+            PlaySong {
+                id: myObject
+            }
             textForButton: 'P'
             widthButton: 35
             heightButton: 35
+            functionToCall: myObject.playSound;
         }
 
         ButtonComponent {
