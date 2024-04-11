@@ -54,9 +54,9 @@ Item {
                                 height: 50
                                 color: "#404040"
                                 Text {
-                                   anchors.centerIn: parent;
-                                   color: "#fff";
-                                   text: musicPlayer.someData[index]
+                                    anchors.centerIn: parent;
+                                    color: "#fff";
+                                    text: musicPlayer.someData[index]
                                 }
                             }
                             Rectangle {
