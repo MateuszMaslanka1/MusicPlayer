@@ -23,7 +23,7 @@ Item {
             Layout.fillHeight: true
             Layout.row: 0
             spacing: 0
-            Layout.preferredHeight: parent.height * 0.90
+            Layout.preferredHeight: root.height * 0.90
             PlayerLeftBar  {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -42,7 +42,7 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.row: 1
-            Layout.preferredHeight: parent.width * 0.10
+            Layout.preferredHeight: root.height * 0.10
         }
     }
 }
