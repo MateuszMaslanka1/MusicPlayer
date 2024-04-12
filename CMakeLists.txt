@@ -4,7 +4,9 @@ project(MusicPlayer VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Multimedia)
+
+# Nie dodawaj target_link_libraries tutaj, ponieważ mytarget jeszcze nie został zdefiniowany
 
 qt_standard_project_setup()
 
@@ -16,32 +18,27 @@ qt_add_qml_module(appMusicPlayer
     URI MusicPlayer
     VERSION 1.0
     QML_FILES Main.qml
-    QML_FILES
-    QML_FILES
     QML_FILES Player/Player.qml
     QML_FILES Player/PlayerContent/PlayerContent.qml
     QML_FILES Player/PlayerLeftBar/PlayerLeftBar.qml
-    SOURCES MusicPlayer/musicplayer.h MusicPlayer/musicplayer.cpp
-    QML_FILES
     QML_FILES Player/SharedComponents/ButtonComponent.qml
     QML_FILES Player/PlayerContent/MusicLibrary.qml
     QML_FILES Player/PlayerController/PlayerController.qml
+    SOURCES MusicPlayer/musicplayer.h MusicPlayer/musicplayer.cpp
     SOURCES PlaySong/playsong.h PlaySong/playsong.cpp
 )
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
+# Dodaj target_link_libraries tuż przed set_target_properties, aby linkować bibliotekę QtMultimedia do appMusicPlayer
+target_link_libraries(appMusicPlayer
+    PRIVATE Qt6::Multimedia
+    PRIVATE Qt6::Quick
+)
+
 set_target_properties(appMusicPlayer PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appMusicPlayer
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
-)
-
-target_link_libraries(appMusicPlayer
-    PRIVATE Qt6::Quick
 )
 
 include(GNUInstallDirs)

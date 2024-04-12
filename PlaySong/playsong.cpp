@@ -1,22 +1,30 @@
 #include "playsong.h"
 #include <QDebug>
-#include <thread>
-PlaySong::PlaySong(QObject *parent)
-    : QObject{parent}
-{}
 
-void PlaySong::threadForPlaySound() {
-    const std::string filePath = "/home/linux/Music/music.mp3";
-    std::string command = "mpg123 ";
-    command += filePath;
-
-    qDebug() << "Starting sound playback...";
-    system(command.c_str());
-    qDebug() << "Sound playback finished.";
-}
+PlaySong::PlaySong(QObject *parent) : QObject(parent) {}
 
 void PlaySong::playSound() {
-    std::thread (&PlaySong::threadForPlaySound, this).detach();
+    QMediaPlayer *player = new QMediaPlayer;
+    QAudioOutput *audioOutput = new QAudioOutput;
+
+
+
+    connect(player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
+
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
+        if (status == QMediaPlayer::LoadedMedia) {
+             player->setAudioOutput(audioOutput);
+            audioOutput->setVolume(100);
+            player->setPosition(30 * 1000);
+            player->play();
+        }
+    });
+
+    player->setSource(QUrl::fromLocalFile("/home/linux/Music/music.mp3"));
 }
 
+void PlaySong::displayDuration(qint64 duration) {
+    QTime currentTime(0, (duration / 60000) % 60, (duration / 1000) % 60, (duration % 1000));
 
+    qDebug() << "Czas odtwarzania: " << currentTime.toString("mm:ss");
+}
