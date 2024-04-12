@@ -7,14 +7,13 @@ void PlaySong::playSound() {
     QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput *audioOutput = new QAudioOutput;
 
-
+    player->setAudioOutput(audioOutput);
 
     connect(player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
 
     connect(player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::LoadedMedia) {
-             player->setAudioOutput(audioOutput);
-            audioOutput->setVolume(100);
+            audioOutput->setVolume(10);
             player->setPosition(30 * 1000);
             player->play();
         }
