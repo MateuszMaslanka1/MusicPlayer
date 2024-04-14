@@ -4,7 +4,7 @@ import QtQuick.Controls 2.3
 
 import "../SharedComponents"
 Item {
-    width: player.width * 0.75
+    // width: player.width * 0.75
     height: player.height * 0.70
     Label {
         text: "Music Library"
@@ -17,7 +17,7 @@ Item {
         anchors.topMargin: 60;
         color: "#202020"
         ScrollView {
-            width: (player.width * 0.75) - 30
+            // width: (player.width * 0.75) - 30
             height: player.height - 80
             // ScerollBar.vertical.policy: ScrollBar.AlwaysOn
             Grid {
