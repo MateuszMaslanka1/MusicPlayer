@@ -10,6 +10,10 @@ Item {
     width: root.width
     height: root.height
 
+    PlaySong {
+        id: myObject
+    }
+
     Rectangle {
         anchors.fill: parent
         color: "#282828"
@@ -64,7 +68,7 @@ Item {
                     width: parent.width * 0.05
                     height: 20
                     Label {
-                        text: "1:50"
+                        text: myObject.second
                         anchors.centerIn: parent
                         font.pixelSize: 12
                     }
@@ -87,9 +91,7 @@ Item {
             }
 
             ButtonComponent {
-                PlaySong {
-                    id: myObject
-                }
+
                 textForButton: 'P'
                 widthButton: 35
                 heightButton: 35

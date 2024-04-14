@@ -15,6 +15,8 @@ void PlaySong::playSound() {
         if (status == QMediaPlayer::LoadedMedia) {
             audioOutput->setVolume(10);
             player->setPosition(30 * 1000);
+            QTime currentTime(0, (player->duration() / 60000) % 60, (player->duration() / 1000) % 60, (player->duration() % 1000));
+            emit setSecondToSlider(currentTime.toString("mm:ss"));
             player->play();
         }
     });
