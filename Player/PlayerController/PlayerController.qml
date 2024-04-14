@@ -42,7 +42,7 @@ Item {
                     width: parent.width * 0.05
                     height: 20
                     Label {
-                        text: "0:58"
+                        text: myObject.secondStart
                         anchors.centerIn: parent
                         font.pixelSize: 12
                     }
@@ -53,13 +53,13 @@ Item {
                     width: parent.width * 0.90
                     height: 20
                     Slider {
-                        id: volumeSlider
+                        id: timeSlider
                         width: parent.width
                         anchors.centerIn: parent
                         from: 0
-                        to: 1
-                        value: mediaPlayer.volume
-                        onValueChanged: mediaPlayer.volume = value
+                        to: myObject.totalDurationInSeconds // Ustawienie maksymalnej wartości Slidera na długość utworu w sekundach
+                        value: myObject.positionInSeconds // Ustawienie wartości Slidera na aktualną pozycję odtwarzania w sekundach
+                        onValueChanged: myObject.setPosition(value) // Ustawienie pozycji odtwarzania na wartość Slidera
                     }
                 }
 
