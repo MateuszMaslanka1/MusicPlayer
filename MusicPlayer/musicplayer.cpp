@@ -5,9 +5,8 @@
 #include <string>
 #include <QVector>
 #include <QString>
-// MusicPlayer::MusicPlayer(QObject *parent) : QObject{parent} {
-
-// }
+#include <QDebug>
+MusicPlayer::MusicPlayer(QObject *parent) : QObject{parent} {}
 
 void MusicPlayer::findInMusicLibrary() {
     QVector<QString> songList;
@@ -19,7 +18,13 @@ void MusicPlayer::findInMusicLibrary() {
             songList.append(QString::fromStdString(entry.path().filename()));
         }
         setSomeData(songList);
+        musicLibraryChanged(songList);
     } else {
         std::filesystem::create_directory(pathToDirectory);
     }
+}
+
+QVector<QString> MusicPlayer::getMusicLibrary() {
+    qDebug() << m_someData;
+    return m_someData;
 }

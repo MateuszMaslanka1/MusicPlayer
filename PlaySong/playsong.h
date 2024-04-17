@@ -13,7 +13,9 @@ class PlaySong : public QObject
     Q_OBJECT
     Q_PROPERTY(QString second READ second WRITE setSecondToSlider NOTIFY valueOfSecond)
     Q_PROPERTY(QString secondStart READ secondStart WRITE setSecondOnStart NOTIFY valueOfSecondStart)
-    Q_PROPERTY(int totalDurationInSeconds READ totalDurationInSeconds NOTIFY totalDurationInSecondsChanged) // Dodany sygnał dla całkowitej długości utworu
+    Q_PROPERTY(qint64 secondForShowOnLine READ secondForShowOnLine WRITE setSecondForShowOnLine NOTIFY valueOfSecondForShowOnLine)
+    Q_PROPERTY(qint64 secondForShowOnLineAll READ secondForShowOnLineAll WRITE setSecondForShowOnLineAll NOTIFY valueOfSecondForShowOnLineAll)
+
 public:
     explicit PlaySong(QObject *parent = nullptr);
     void threadForPlaySound();
@@ -24,21 +26,41 @@ public:
         return m_second;
     }
 
-    QString secondStart() const {
-        return m_secondStart;
+    qint64 secondForShowOnLine() const {
+        return m_secondForShowOnLine;
     }
 
-    int totalDurationInSeconds() const {
-        return m_totalDurationInSeconds;
+    qint64 secondForShowOnLineAll() const {
+        return m_secondForShowOnLineAll;
+    }
+
+    QString secondStart() const {
+        return m_secondStart;
     }
 
 signals:
     void valueOfSecond();
     void valueOfSecondStart();
-    void totalDurationInSecondsChanged(int totalDurationInSeconds); // Deklaracja sygnału dla całkowitej długości utworu
+    void valueOfSecondForShowOnLine();
+      void valueOfSecondForShowOnLineAll();
 
 public slots:
     void displayDuration(qint64 duration);
+    void updateMusicLibrary(const QVector<QString> &musicLibrary);
+
+    qint64 setSecondForShowOnLineAll(qint64 value) {
+        if (m_secondForShowOnLineAll != value) {
+            m_secondForShowOnLineAll = value;
+            emit valueOfSecondForShowOnLineAll();
+        }
+    }
+
+    qint64 setSecondForShowOnLine(qint64 value) {
+        if (m_secondForShowOnLine != value) {
+            m_secondForShowOnLine = value;
+            emit valueOfSecondForShowOnLine();
+        }
+    }
 
     void setSecondToSlider(QString value) {
         if (m_second != value) {
@@ -54,20 +76,13 @@ public slots:
         }
     }
 
-    void onTotalDurationChanged(int totalDurationInSeconds) {
-        if (m_totalDurationInSeconds != totalDurationInSeconds) {
-            m_totalDurationInSeconds = totalDurationInSeconds;
-            emit totalDurationInSecondsChanged(m_totalDurationInSeconds);
-        }
-    }
-
 private:
     QMediaPlayer *m_player;
     QAudioOutput *m_audioOutput;
     QString m_second;
     QString m_secondStart;
-    int m_totalDurationInSeconds;
-    int m_positionInSeconds;
+    qint64 m_secondForShowOnLine;
+    qint64 m_secondForShowOnLineAll;
 };
 
 #endif // PLAYSONG_H

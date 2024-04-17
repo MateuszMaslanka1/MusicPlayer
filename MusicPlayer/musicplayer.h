@@ -11,13 +11,17 @@ class MusicPlayer : public QObject
     Q_PROPERTY(QVector<QString> someData READ someData WRITE setSomeData NOTIFY someDataChanged)
 
 public:
+    explicit MusicPlayer(QObject *parent = nullptr);
+
     void findInMusicLibrary();
+    QVector<QString>getMusicLibrary();
     QVector<QString> someData() const {
         return m_someData;
     }
 
 signals:
     void someDataChanged();
+    void musicLibraryChanged(const QVector<QString> &musicLibrary);
 
 public slots:
     void setSomeData(const QVector<QString> &songList) {

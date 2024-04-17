@@ -12,7 +12,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     MusicPlayer musicPlayer;
+    PlaySong playSong;
+
+    QObject::connect(&musicPlayer, &MusicPlayer::musicLibraryChanged, &playSong, &PlaySong::updateMusicLibrary);
     musicPlayer.findInMusicLibrary();
+
     engine.rootContext()->setContextProperty("musicPlayer", &musicPlayer);
 
     const QUrl url(u"qrc:/MusicPlayer/Main.qml"_qs);
