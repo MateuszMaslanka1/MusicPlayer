@@ -57,9 +57,23 @@ Item {
                         width: parent.width
                         anchors.centerIn: parent
                         from: 0
-                        to: myObject.secondForShowOnLineAll // Ustawienie maksymalnej wartości Slidera na długość utworu w sekundach
-                        value: myObject.secondForShowOnLine // Ustawienie wartości Slidera na aktualną pozycję odtwarzania w sekundach
-                        // onValueChanged: myObject.setPosition(value) // Ustawienie pozycji odtwarzania na wartość Slidera
+                        to: myObject.secondForShowOnLineAll
+                        value: myObject.secondForShowOnLine
+                        property bool userInteraction: false
+
+                        onValueChanged: {
+                            if (userInteraction) {
+                                myObject.setPosition(value)
+                            }
+                        }
+
+                        onPressedChanged: {
+                            if (pressed) {
+                                userInteraction = true;
+                            } else {
+                                userInteraction = false;
+                            }
+                        }
                     }
                 }
 

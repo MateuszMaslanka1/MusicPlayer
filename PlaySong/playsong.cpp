@@ -1,31 +1,31 @@
 #include "playsong.h"
 #include <QDebug>
+PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer(this)) {}
 
-PlaySong::PlaySong(QObject *parent) : QObject(parent)  {}
-
+QVector<QString> getMusicLibrary;
 void PlaySong::playSound() {
-    QMediaPlayer *player = new QMediaPlayer;
+    // QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput *audioOutput = new QAudioOutput;
 
-    player->setAudioOutput(audioOutput);
+    m_player->setAudioOutput(audioOutput);
 
-    connect(player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
+    qDebug() << "Nowa lista utworów:" << getMusicLibrary[0];
+
+    connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::LoadedMedia) {
             audioOutput->setVolume(10);
-            qint64 durationInMillis = player->duration();
+            qint64 durationInMillis = m_player->duration();
             int durationInSeconds = durationInMillis / 1000;
-            qDebug() << "Długość utworu w sekundach: " << durationInSeconds;
-
             QTime currentTime(0, 0, 0);
             emit setSecondToSlider(currentTime.addSecs(durationInSeconds).toString("mm:ss"));
             emit setSecondForShowOnLineAll(durationInSeconds);
-            player->play();
+            m_player->play();
         }
     });
 
-    connect(player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
-
-    player->setSource(QUrl::fromLocalFile("/home/linux/Music/music.mp3"));
+    connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
+    // connect(player, &QMediaPlayer::mediaStatusChanged, this, &PlaySong::setPosition);
+    m_player->setSource(QUrl::fromLocalFile(getMusicLibrary[0]));
 }
 
 void PlaySong::displayDuration(qint64 duration) {
@@ -37,6 +37,31 @@ void PlaySong::displayDuration(qint64 duration) {
 }
 
 void PlaySong::updateMusicLibrary(const QVector<QString> &musicLibrary) {
-    // Tutaj możesz zrobić, co zechcesz z listą utworów, na przykład wyświetlić ją
-    qDebug() << "Nowa lista utworów:" << musicLibrary;
+    getMusicLibrary = musicLibrary;
+}
+
+void PlaySong::setPosition(qint64 position) {
+    qInfo() << position;
+    if (!m_player) {
+        qWarning() << "Player is not initialized!";
+        return;
+    }
+
+    QMediaPlayer::MediaStatus mediaStatus = m_player->mediaStatus();
+
+    // Jeśli odtwarzacz jest zatrzymany lub wstrzymany, ustawiamy nową pozycję bezpośrednio
+    if (mediaStatus == QMediaPlayer::LoadedMedia || mediaStatus == QMediaPlayer::BufferedMedia) {
+        qint64 setPositionStop = position * 1000;
+        m_player->setPosition(setPositionStop);
+    } else {
+        // W przeciwnym razie, czekamy na zmianę statusu na LoadedMedia lub BufferedMedia
+        connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newStatus) {
+            if (newStatus == QMediaPlayer::LoadedMedia || newStatus == QMediaPlayer::BufferedMedia) {
+                qint64 setPosition = position * 1000;
+                m_player->setPosition(setPosition);
+                disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr); // Odłączamy sygnał
+            }
+        });
+    }
+
 }

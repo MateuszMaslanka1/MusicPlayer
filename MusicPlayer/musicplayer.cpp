@@ -10,15 +10,16 @@ MusicPlayer::MusicPlayer(QObject *parent) : QObject{parent} {}
 
 void MusicPlayer::findInMusicLibrary() {
     QVector<QString> songList;
+    QVector<QString> songListFullPath;
     char* username = getlogin();
     std::string pathToDirectory = "/home/" + std::string(username) + "/Music";
     if (std::filesystem::exists(pathToDirectory) && std::filesystem::is_directory(pathToDirectory)) {
         for (const auto& entry : std::filesystem::directory_iterator(pathToDirectory)) {
-            std::cout << entry.path().filename() << std::endl;
             songList.append(QString::fromStdString(entry.path().filename()));
+            songListFullPath.append(QString::fromStdString(entry.path()));
         }
         setSomeData(songList);
-        musicLibraryChanged(songList);
+        musicLibraryChanged(songListFullPath);
     } else {
         std::filesystem::create_directory(pathToDirectory);
     }

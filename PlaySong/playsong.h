@@ -21,6 +21,8 @@ public:
     void threadForPlaySound();
     std::string getSongDuration(const std::string& filePath);
     Q_INVOKABLE void playSound();
+    Q_INVOKABLE void setPosition(qint64 position);
+
 
     QString second() const {
         return m_second;
@@ -42,12 +44,11 @@ signals:
     void valueOfSecond();
     void valueOfSecondStart();
     void valueOfSecondForShowOnLine();
-      void valueOfSecondForShowOnLineAll();
+    void valueOfSecondForShowOnLineAll();
 
 public slots:
     void displayDuration(qint64 duration);
     void updateMusicLibrary(const QVector<QString> &musicLibrary);
-
     qint64 setSecondForShowOnLineAll(qint64 value) {
         if (m_secondForShowOnLineAll != value) {
             m_secondForShowOnLineAll = value;
@@ -83,6 +84,8 @@ private:
     QString m_secondStart;
     qint64 m_secondForShowOnLine;
     qint64 m_secondForShowOnLineAll;
+
+    QVector<QString> m_getMusicLibrary;
 };
 
 #endif // PLAYSONG_H
