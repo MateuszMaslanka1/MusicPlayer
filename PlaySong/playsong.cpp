@@ -4,7 +4,6 @@ PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer
 
 QVector<QString> getMusicLibrary;
 void PlaySong::playSound() {
-    // QMediaPlayer *player = new QMediaPlayer;
     QAudioOutput *audioOutput = new QAudioOutput;
 
     m_player->setAudioOutput(audioOutput);
@@ -24,7 +23,8 @@ void PlaySong::playSound() {
     });
 
     connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
-    // connect(player, &QMediaPlayer::mediaStatusChanged, this, &PlaySong::setPosition);
+
+
     m_player->setSource(QUrl::fromLocalFile(getMusicLibrary[0]));
 }
 
@@ -49,19 +49,16 @@ void PlaySong::setPosition(qint64 position) {
 
     QMediaPlayer::MediaStatus mediaStatus = m_player->mediaStatus();
 
-    // Jeśli odtwarzacz jest zatrzymany lub wstrzymany, ustawiamy nową pozycję bezpośrednio
     if (mediaStatus == QMediaPlayer::LoadedMedia || mediaStatus == QMediaPlayer::BufferedMedia) {
         qint64 setPositionStop = position * 1000;
         m_player->setPosition(setPositionStop);
     } else {
-        // W przeciwnym razie, czekamy na zmianę statusu na LoadedMedia lub BufferedMedia
         connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus newStatus) {
             if (newStatus == QMediaPlayer::LoadedMedia || newStatus == QMediaPlayer::BufferedMedia) {
                 qint64 setPosition = position * 1000;
                 m_player->setPosition(setPosition);
-                disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr); // Odłączamy sygnał
+                disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr);
             }
         });
     }
-
 }

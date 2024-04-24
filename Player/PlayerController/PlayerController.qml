@@ -58,22 +58,24 @@ Item {
                         anchors.centerIn: parent
                         from: 0
                         to: myObject.secondForShowOnLineAll
-                        value: myObject.secondForShowOnLine
+                        value: !userInteraction ? myObject.secondForShowOnLine : ''
                         property bool userInteraction: false
 
-                        onValueChanged: {
-                            if (userInteraction) {
+                        // onValueChanged: {
+                        //     if (userInteraction) {
+
+                        //     }
+                        // }
+
+                        onPressedChanged: {
+                            if (!pressed) {
                                 myObject.setPosition(value)
+                                userInteraction = pressed
+                            } else {
+                                userInteraction = pressed
                             }
                         }
 
-                        onPressedChanged: {
-                            if (pressed) {
-                                userInteraction = true;
-                            } else {
-                                userInteraction = false;
-                            }
-                        }
                     }
                 }
 
