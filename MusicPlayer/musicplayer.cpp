@@ -19,13 +19,9 @@ void MusicPlayer::findInMusicLibrary() {
             songListFullPath.append(QString::fromStdString(entry.path()));
         }
         setSomeData(songList);
+        setPath(songListFullPath);
         musicLibraryChanged(songListFullPath);
     } else {
         std::filesystem::create_directory(pathToDirectory);
     }
-}
-
-QVector<QString> MusicPlayer::getMusicLibrary() {
-    qDebug() << m_someData;
-    return m_someData;
 }

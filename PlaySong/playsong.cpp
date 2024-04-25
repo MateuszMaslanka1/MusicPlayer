@@ -3,13 +3,11 @@
 PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer(this)) {}
 
 QVector<QString> getMusicLibrary;
+
 void PlaySong::playSound() {
     QAudioOutput *audioOutput = new QAudioOutput;
 
     m_player->setAudioOutput(audioOutput);
-
-    qDebug() << "Nowa lista utworów:" << getMusicLibrary[0];
-
     connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::LoadedMedia) {
             audioOutput->setVolume(10);
@@ -21,10 +19,8 @@ void PlaySong::playSound() {
             m_player->play();
         }
     });
-
+    // qInfo() << musicName;
     connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
-
-
     m_player->setSource(QUrl::fromLocalFile(getMusicLibrary[0]));
 }
 

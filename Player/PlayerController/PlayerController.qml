@@ -9,9 +9,20 @@ import PlaySong 1.0
 Item {
     width: root.width
     height: root.height
+    property string getSongName: ""
+    property string getPathName: ""
 
     PlaySong {
-        id: myObject
+        id: playSong
+    }
+
+    onGetSongNameChanged: {
+
+        playSong.playSound();
+    }
+
+    onGetPathNameChanged: {
+      console.log("test:", getPathName);
     }
 
     Rectangle {
@@ -25,7 +36,8 @@ Item {
             anchors.topMargin: 20
 
             Label {
-                text: "song name"
+                id: songName
+                text: getSongName
                 font.pixelSize: 24
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
@@ -42,7 +54,7 @@ Item {
                     width: parent.width * 0.05
                     height: 20
                     Label {
-                        text: myObject.secondStart
+                        text: playSong.secondStart
                         anchors.centerIn: parent
                         font.pixelSize: 12
                     }
@@ -57,19 +69,12 @@ Item {
                         width: parent.width
                         anchors.centerIn: parent
                         from: 0
-                        to: myObject.secondForShowOnLineAll
-                        value: !userInteraction ? myObject.secondForShowOnLine : ''
+                        to: playSong.secondForShowOnLineAll
+                        value: !userInteraction ? playSong.secondForShowOnLine : ''
                         property bool userInteraction: false
-
-                        // onValueChanged: {
-                        //     if (userInteraction) {
-
-                        //     }
-                        // }
-
                         onPressedChanged: {
                             if (!pressed) {
-                                myObject.setPosition(value)
+                                playSong.setPosition(value)
                                 userInteraction = pressed
                             } else {
                                 userInteraction = pressed
@@ -84,7 +89,7 @@ Item {
                     width: parent.width * 0.05
                     height: 20
                     Label {
-                        text: myObject.second
+                        text: playSong.second
                         anchors.centerIn: parent
                         font.pixelSize: 12
                     }
@@ -111,7 +116,7 @@ Item {
                 textForButton: 'P'
                 widthButton: 35
                 heightButton: 35
-                functionToCall: myObject.playSound;
+                functionToCall: playSong.playSound;
             }
 
             ButtonComponent {

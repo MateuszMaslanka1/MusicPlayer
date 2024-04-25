@@ -34,10 +34,18 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width * 0.80
+                id: childComponent
+                onHandleSongName: {
+                    playerController.getSongName = name
+                }
+                onHandlePath: {
+                    playerController.getPathName = path;
+                }
             }
         }
 
         PlayerController  {
+            id: playerController
             Layout.topMargin: 0
             Layout.fillWidth: true
             Layout.fillHeight: true
