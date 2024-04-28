@@ -22,7 +22,6 @@ void PlaySong::playSound(QString musicPath) {
             m_player->play();
         }
     });
-    qInfo() << musicPath;
     connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
     m_player->setSource(QUrl::fromLocalFile(musicPath));
 }

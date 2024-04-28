@@ -14,6 +14,7 @@ public:
     explicit MusicPlayer(QObject *parent = nullptr);
 
     void findInMusicLibrary();
+    Q_INVOKABLE void getPathToDirectory(QString pathToDirectory);
     QVector<QString>getMusicLibrary();
     QVector<QString> someData() const {
         return m_someData;

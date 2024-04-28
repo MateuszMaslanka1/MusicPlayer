@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.15
 import "../PlayerController"
 import "../SharedComponents"
 import PlaySong 1.0
+import QtQuick.Controls 2.15
+import Qt.labs.platform 1.0
 Item {
     id: musicPlayerComponent
     height: player.height * 0.70
@@ -18,10 +20,32 @@ Item {
             color: "#fff"
             font.weight: 500
         }
+
+
+        FolderDialog {
+            id: fileDialog
+            title: "Wybierz katalog"
+            folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+
+            onAccepted: {
+                const folderPath = fileDialog.currentFolder;
+                // console.log("Wybrany katalog:", folderPath);
+                musicPlayer.getPathToDirectory(folderPath);
+            }
+        }
+
+        Button {
+            text: "Otwórz eksplorator katalogów"
+            anchors.centerIn: parent
+            onClicked: fileDialog.open()
+        }
+
         Rectangle {
             anchors.fill: parent
             anchors.topMargin: 60;
             color: "#202020"
+
+
             ScrollView {
                 // width: (player.width * 0.75) - 30
                 height: player.height - 80
