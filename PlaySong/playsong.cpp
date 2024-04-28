@@ -4,8 +4,11 @@ PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer
 
 QVector<QString> getMusicLibrary;
 
-void PlaySong::playSound() {
+void PlaySong::playSound(QString musicPath) {
     QAudioOutput *audioOutput = new QAudioOutput;
+    if (musicPath == "") {
+        musicPath = getMusicLibrary[0];
+    }
 
     m_player->setAudioOutput(audioOutput);
     connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
@@ -19,9 +22,9 @@ void PlaySong::playSound() {
             m_player->play();
         }
     });
-    // qInfo() << musicName;
+    qInfo() << musicPath;
     connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
-    m_player->setSource(QUrl::fromLocalFile(getMusicLibrary[0]));
+    m_player->setSource(QUrl::fromLocalFile(musicPath));
 }
 
 void PlaySong::displayDuration(qint64 duration) {

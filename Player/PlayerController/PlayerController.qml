@@ -16,13 +16,10 @@ Item {
         id: playSong
     }
 
-    onGetSongNameChanged: {
-
-        playSong.playSound();
-    }
+    onGetSongNameChanged: {}
 
     onGetPathNameChanged: {
-      console.log("test:", getPathName);
+      playSong.playSound(getPathName);
     }
 
     Rectangle {
@@ -111,12 +108,16 @@ Item {
                 heightButton: 35
             }
 
-            ButtonComponent {
+            Button {
+                width: 35
+                height: 35
+                onClicked: {
+                    playSong.playSound("");
+                }
 
-                textForButton: 'P'
-                widthButton: 35
-                heightButton: 35
-                functionToCall: playSong.playSound;
+                contentItem: Text {
+                    text: 'P'
+                }
             }
 
             ButtonComponent {

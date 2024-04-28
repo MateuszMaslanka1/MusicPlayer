@@ -20,7 +20,7 @@ public:
     explicit PlaySong(QObject *parent = nullptr);
     void threadForPlaySound();
     std::string getSongDuration(const std::string& filePath);
-    Q_INVOKABLE void playSound();
+    Q_INVOKABLE void playSound(QString musicPath);
     Q_INVOKABLE void setPosition(qint64 position);
 
 
