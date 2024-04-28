@@ -68,7 +68,7 @@ Item {
                                 columns: 3
                                 spacing: 5
                                 Rectangle {
-                                    width: 35
+                                    width: 50
                                     height: 50
                                     radius: 5
                                     color: "#404040"
@@ -84,7 +84,7 @@ Item {
                                     }
                                 }
                                 Rectangle {
-                                    width: (parent.width * 0.95) - 35
+                                    width: (parent.width * 0.95) - 65
                                     height: 50
                                     color: "#404040"
                                     Text {
@@ -94,7 +94,7 @@ Item {
                                     }
                                 }
                                 Rectangle {
-                                    width: (parent.width * 0.05) - 35
+                                    width: (parent.width * 0.05)
                                     height: 50
                                     color: "#404040"
                                     radius: 5
