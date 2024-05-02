@@ -44,8 +44,6 @@ Item {
             anchors.fill: parent
             anchors.topMargin: 60;
             color: "#202020"
-
-
             ScrollView {
                 // width: (player.width * 0.75) - 30
                 height: player.height - 80

@@ -1,6 +1,5 @@
 #include "musicplayer.h"
 #include <filesystem>
-#include <iostream>
 #include <unistd.h>
 #include <string>
 #include <QVector>

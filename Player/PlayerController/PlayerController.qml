@@ -18,8 +18,15 @@ Item {
 
     onGetSongNameChanged: {}
 
+    Component.onCompleted: {
+        playSong.setFirstSong();
+    }
+
     onGetPathNameChanged: {
-      playSong.playSound(getPathName);
+        if (getPathName) {
+            playSong.playSound(getPathName);
+        }
+        getPathName = "";
     }
 
     Rectangle {
@@ -112,7 +119,8 @@ Item {
                 width: 35
                 height: 35
                 onClicked: {
-                    playSong.playSound("");
+                    console.log(playSong.firstSong)
+                    playSong.playSound(playSong.firstSong);
                 }
 
                 contentItem: Text {

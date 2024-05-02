@@ -15,13 +15,18 @@ class PlaySong : public QObject
     Q_PROPERTY(QString secondStart READ secondStart WRITE setSecondOnStart NOTIFY valueOfSecondStart)
     Q_PROPERTY(qint64 secondForShowOnLine READ secondForShowOnLine WRITE setSecondForShowOnLine NOTIFY valueOfSecondForShowOnLine)
     Q_PROPERTY(qint64 secondForShowOnLineAll READ secondForShowOnLineAll WRITE setSecondForShowOnLineAll NOTIFY valueOfSecondForShowOnLineAll)
+    Q_PROPERTY(QString firstSong READ getFirstSong NOTIFY firstSongChanged)
 
 public:
+    int savePosition = 0;
+    bool isPause = false;
+    Q_INVOKABLE void setFirstSong();
     explicit PlaySong(QObject *parent = nullptr);
     void threadForPlaySound();
     std::string getSongDuration(const std::string& filePath);
     Q_INVOKABLE void playSound(QString musicPath);
     Q_INVOKABLE void setPosition(qint64 position);
+    QString getFirstSong() const;
 
 
     QString second() const {
@@ -45,8 +50,10 @@ signals:
     void valueOfSecondStart();
     void valueOfSecondForShowOnLine();
     void valueOfSecondForShowOnLineAll();
+    void firstSongChanged();
 
 public slots:
+    QString getFirstSong();
     void displayDuration(qint64 duration);
     void updateMusicLibrary(const QVector<QString> &musicLibrary);
     qint64 setSecondForShowOnLineAll(qint64 value) {
@@ -84,7 +91,7 @@ private:
     QString m_secondStart;
     qint64 m_secondForShowOnLine;
     qint64 m_secondForShowOnLineAll;
-
+    QString firstSong;
     QVector<QString> m_getMusicLibrary;
 };
 
