@@ -59,7 +59,6 @@ void PlaySong::updateMusicLibrary(const QVector<QString> &musicLibrary) {
 }
 
 void PlaySong::setPosition(qint64 position) {
-    qInfo() << position;
     if (!m_player) {
         qWarning() << "Player is not initialized!";
         return;
@@ -78,5 +77,35 @@ void PlaySong::setPosition(qint64 position) {
                 disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr);
             }
         });
+    }
+}
+
+void PlaySong::backMusic() {
+    if (!getMusicLibrary.isEmpty()) {
+        int currentIndex = getMusicLibrary.indexOf(firstSong);
+        if (currentIndex != -1) {
+            if (currentIndex > 0) {
+                QString previousSong = getMusicLibrary[currentIndex - 1];
+                playSound(previousSong);
+            } else {
+                QString lastSong = getMusicLibrary.last();
+                playSound(lastSong);
+            }
+        }
+    }
+}
+
+void PlaySong::nextMusic() {
+    if (!getMusicLibrary.isEmpty()) {
+        int currentIndex = getMusicLibrary.indexOf(firstSong);
+        if (currentIndex != -1) {
+            if (currentIndex < getMusicLibrary.size() - 1) {
+                QString nextSong = getMusicLibrary[currentIndex + 1];
+                playSound(nextSong);
+            } else {
+                QString firstSong = getMusicLibrary.first();
+                playSound(firstSong);
+            }
+        }
     }
 }

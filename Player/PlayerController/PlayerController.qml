@@ -109,17 +109,22 @@ Item {
                 bottomMargin: 22
             }
 
-            ButtonComponent {
-                textForButton: 'P'
-                widthButton: 35
-                heightButton: 35
+            Button {
+                width: 35
+                height: 35
+                onClicked: {
+                    playSong.backMusic();
+                }
+
+                contentItem: Text {
+                    text: 'B'
+                }
             }
 
             Button {
                 width: 35
                 height: 35
                 onClicked: {
-                    console.log(playSong.firstSong)
                     playSong.playSound(playSong.firstSong);
                 }
 
@@ -128,10 +133,16 @@ Item {
                 }
             }
 
-            ButtonComponent {
-                textForButton: 'P'
-                widthButton: 35
-                heightButton: 35
+            Button {
+                width: 35
+                height: 35
+                onClicked: {
+                    playSong.nextMusic();
+                }
+
+                contentItem: Text {
+                    text: 'N'
+                }
             }
         }
     }

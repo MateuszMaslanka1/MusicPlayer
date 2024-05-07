@@ -26,6 +26,8 @@ public:
     std::string getSongDuration(const std::string& filePath);
     Q_INVOKABLE void playSound(QString musicPath);
     Q_INVOKABLE void setPosition(qint64 position);
+    Q_INVOKABLE void nextMusic();
+    Q_INVOKABLE void backMusic();
     QString getFirstSong() const;
 
 
