@@ -5,20 +5,16 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: "#202020"
-        // Rectangle {
-        //     anchors.fill: parent
-        //     color: "#202020"
-            // anchors.topMargin: 10;
-            // anchors.leftMargin: 20;
-            MusicLibrary{
-                id: childComponent
-                onSongName: {
-                    handleSongName(name)
-                }
-                onFullPathSong: {
-                    handlePath(path)
-                }
+        MusicLibrary{
+            anchors.rightMargin: 10
+            anchors.leftMargin: 10
+            id: childComponent
+            onSongName: {
+                handleSongName(name)
             }
-        // }
+            onFullPathSong: {
+                handlePath(path)
+            }
+        }
     }
 }

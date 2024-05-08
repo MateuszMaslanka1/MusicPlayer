@@ -15,17 +15,16 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
+
         Rectangle {
             Layout.preferredWidth: parent.width
             Layout.preferredHeight: parent.height * 0.10
             Layout.minimumHeight: 50
             Layout.fillHeight: true
             color: "#202020"
-            border.color: "blue"
 
             RowLayout {
                 anchors.fill: parent
-                Layout.fillWidth: true
                 Label {
                     text: "Music Library"
                     font.pixelSize: 36
@@ -45,20 +44,25 @@ Item {
 
                 Button {
                     text: "Otwórz eksplorator katalogów"
-                    width: 250
-                    height: 50
-                    MouseArea {
-                        cursorShape: Qt.PointingHandCursor
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        // onEntered: parent.color = "#808080"
-                        // onExited: parent.color = colorButton
-                        onClicked: {
-                            fileDialog.open()
+                    Layout.alignment: Qt.AlignRight
+                    padding: 10
+
+                    Rectangle {
+                        width: parent.width
+                        height: parent.height
+                        color: parent.hovered ? "#808080" : "#363434"
+                        radius: 5
+                        MouseArea {
+                            cursorShape: Qt.PointingHandCursor
+                            anchors.fill: parent
+                            onClicked: {
+                                fileDialog.open()
+                            }
                         }
                     }
                 }
             }
+
         }
 
         Rectangle {
@@ -67,9 +71,12 @@ Item {
             Layout.fillHeight: true
             color: "#202020"
             ScrollView {
-                anchors.fill: parent
-                clip: true
-                // ScerollBar.vertical.policy: ScrollBar.AlwaysOn
+                id: scroller
+                anchors.top: parent.top
+                anchors.left: parent.left
+                width: parent.width
+                height: parent.height
+                clip : true
                 Grid {
                     anchors.fill: parent
                     columns: 1
