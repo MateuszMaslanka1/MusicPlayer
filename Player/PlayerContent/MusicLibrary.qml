@@ -128,7 +128,15 @@ Item {
                                     Text {
                                         anchors.centerIn: parent;
                                         color: "#fff";
-                                        text: "2:23"
+                                        text: {
+                                            const songLength = musicPlayer.songLenght[index]
+                                            const parts = songLength.split(":")
+                                            if (parts.length === 2 && parseInt(parts[1]) < 10) {
+                                                return parts[0] + ":0" + parts[1]
+                                            } else {
+                                                return songLength
+                                            }
+                                        }
                                     }
                                 }
                             }

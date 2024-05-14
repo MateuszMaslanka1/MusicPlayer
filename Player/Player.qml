@@ -35,9 +35,6 @@ Item {
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width * 0.80
                 id: childComponent
-                onHandleSongName: {
-                    playerController.getSongName = name
-                }
                 onHandlePath: {
                     playerController.getPathName = path;
                 }

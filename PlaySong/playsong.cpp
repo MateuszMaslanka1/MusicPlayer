@@ -1,7 +1,8 @@
 #include "playsong.h"
 #include <QDebug>
+#include<QMediaMetaData>
 PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer(this)) {}
-
+#include <QFileInfo>
 QVector<QString> getMusicLibrary;
 
 void PlaySong::setFirstSong() {
@@ -13,9 +14,7 @@ QString PlaySong::getFirstSong() {
 }
 
 void PlaySong::playSound(QString musicPath) {
-
     QAudioOutput *audioOutput = new QAudioOutput;
-
     qInfo() << musicPath;
     if (PlaySong::isPause && musicPath == firstSong) {
         m_player->pause();
@@ -37,6 +36,8 @@ void PlaySong::playSound(QString musicPath) {
                     m_player->setPosition(PlaySong::savePosition * 1000);
                     PlaySong::savePosition = 0;
                 }
+                QString fileName = QFileInfo(firstSong).fileName();
+                setSongName(fileName);
                 m_player->play();
             }
         });
@@ -74,6 +75,10 @@ void PlaySong::setPosition(qint64 position) {
             if (newStatus == QMediaPlayer::LoadedMedia || newStatus == QMediaPlayer::BufferedMedia) {
                 qint64 setPosition = position * 1000;
                 m_player->setPosition(setPosition);
+
+
+
+
                 disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr);
             }
         });

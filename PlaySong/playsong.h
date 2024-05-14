@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QTime>
+#include <mpg123.h>
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
@@ -16,6 +17,7 @@ class PlaySong : public QObject
     Q_PROPERTY(qint64 secondForShowOnLine READ secondForShowOnLine WRITE setSecondForShowOnLine NOTIFY valueOfSecondForShowOnLine)
     Q_PROPERTY(qint64 secondForShowOnLineAll READ secondForShowOnLineAll WRITE setSecondForShowOnLineAll NOTIFY valueOfSecondForShowOnLineAll)
     Q_PROPERTY(QString firstSong READ getFirstSong NOTIFY firstSongChanged)
+    Q_PROPERTY(QString songName READ songName WRITE setSongName NOTIFY setSongNameChanged)
 
 public:
     int savePosition = 0;
@@ -47,17 +49,30 @@ public:
         return m_secondStart;
     }
 
+    QString songName() const {
+        return m_songName;
+    }
+
 signals:
     void valueOfSecond();
     void valueOfSecondStart();
     void valueOfSecondForShowOnLine();
     void valueOfSecondForShowOnLineAll();
     void firstSongChanged();
+    void setSongNameChanged();
 
 public slots:
     QString getFirstSong();
     void displayDuration(qint64 duration);
     void updateMusicLibrary(const QVector<QString> &musicLibrary);
+
+    void setSongName(QString value) {
+        if (m_songName != value) {
+            m_songName = value;
+            emit setSongNameChanged();
+        }
+    }
+
     qint64 setSecondForShowOnLineAll(qint64 value) {
         if (m_secondForShowOnLineAll != value) {
             m_secondForShowOnLineAll = value;
@@ -91,6 +106,7 @@ private:
     QAudioOutput *m_audioOutput;
     QString m_second;
     QString m_secondStart;
+    QString m_songName;
     qint64 m_secondForShowOnLine;
     qint64 m_secondForShowOnLineAll;
     QString firstSong;

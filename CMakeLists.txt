@@ -28,11 +28,30 @@ qt_add_qml_module(appMusicPlayer
     SOURCES PlaySong/playsong.h PlaySong/playsong.cpp
 )
 
-# Dodaj target_link_libraries tuż przed set_target_properties, aby linkować bibliotekę QtMultimedia do appMusicPlayer
 target_link_libraries(appMusicPlayer
     PRIVATE Qt6::Multimedia
     PRIVATE Qt6::Quick
 )
+
+find_library(MPG123_LIBRARY NAMES mpg123)
+if (MPG123_LIBRARY)
+    target_link_libraries(appMusicPlayer PRIVATE ${MPG123_LIBRARY})
+else()
+    include(FetchContent)
+    FetchContent_Declare(
+        mpg123
+        URL https://www.mpg123.de/download/mpg123-1.28.0.tar.bz2
+    )
+
+    FetchContent_GetProperties(mpg123)
+    if(NOT mpg123_POPULATED)
+        FetchContent_Populate(mpg123)
+        add_subdirectory(${mpg123_SOURCE_DIR} ${mpg123_BINARY_DIR})
+        target_link_libraries(appMusicPlayer PRIVATE mpg123)
+    else()
+        message(FATAL_ERROR "Nie można pobrać mpg123.")
+    endif()
+endif()
 
 set_target_properties(appMusicPlayer PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}

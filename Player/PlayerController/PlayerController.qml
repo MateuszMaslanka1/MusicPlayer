@@ -9,14 +9,11 @@ import PlaySong 1.0
 Item {
     width: root.width
     height: root.height
-    property string getSongName: ""
     property string getPathName: ""
 
     PlaySong {
         id: playSong
     }
-
-    onGetSongNameChanged: {}
 
     Component.onCompleted: {
         playSong.setFirstSong();
@@ -41,7 +38,7 @@ Item {
 
             Label {
                 id: songName
-                text: getSongName
+                text: playSong.songName
                 font.pixelSize: 24
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
