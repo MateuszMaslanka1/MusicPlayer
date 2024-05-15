@@ -15,7 +15,6 @@ QString PlaySong::getFirstSong() {
 
 void PlaySong::playSound(QString musicPath) {
     QAudioOutput *audioOutput = new QAudioOutput;
-    qInfo() << musicPath;
     if (PlaySong::isPause && musicPath == firstSong) {
         m_player->pause();
         PlaySong::savePosition = m_player->position() / 1000;
@@ -32,6 +31,7 @@ void PlaySong::playSound(QString musicPath) {
                 QTime currentTime(0, 0, 0);
                 emit setSecondToSlider(currentTime.addSecs(durationInSeconds).toString("mm:ss"));
                 emit setSecondForShowOnLineAll(durationInSeconds);
+
                 if (PlaySong::savePosition != 0) {
                     m_player->setPosition(PlaySong::savePosition * 1000);
                     PlaySong::savePosition = 0;
@@ -53,6 +53,9 @@ void PlaySong::displayDuration(qint64 duration) {
     QString formattedTime = currentTime.addSecs(durationInSeconds).toString("mm:ss");
     emit setSecondOnStart(formattedTime);
     emit setSecondForShowOnLine(durationInSeconds);
+    if (durationInSeconds == m_player->duration() / 1000) {
+        PlaySong::isPause = false;
+    }
 }
 
 void PlaySong::updateMusicLibrary(const QVector<QString> &musicLibrary) {
@@ -65,6 +68,10 @@ void PlaySong::setPosition(qint64 position) {
         return;
     }
 
+    if(!PlaySong::isPause) {
+        PlaySong::isPause = true;
+    }
+
     QMediaPlayer::MediaStatus mediaStatus = m_player->mediaStatus();
 
     if (mediaStatus == QMediaPlayer::LoadedMedia || mediaStatus == QMediaPlayer::BufferedMedia) {
@@ -75,10 +82,6 @@ void PlaySong::setPosition(qint64 position) {
             if (newStatus == QMediaPlayer::LoadedMedia || newStatus == QMediaPlayer::BufferedMedia) {
                 qint64 setPosition = position * 1000;
                 m_player->setPosition(setPosition);
-
-
-
-
                 disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr);
             }
         });
