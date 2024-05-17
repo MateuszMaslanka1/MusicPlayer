@@ -28,13 +28,19 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width * 0.20
+                onSwitchToMusic: {
+                    playerContent.switchToView("musicLibraryComponent")
+                }
+                onSwitchToPlaylist: {
+                    playerContent.switchToView("musicPlayListsComponent")
+                }
             }
 
             PlayerContent  {
+                id: playerContent
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width * 0.80
-                id: childComponent
                 onHandlePath: {
                     playerController.getPathName = path;
                 }

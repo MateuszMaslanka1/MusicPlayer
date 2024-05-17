@@ -22,17 +22,5 @@ Item {
             font.weight: 500
         }
 
-        MouseArea {
-            cursorShape: Qt.PointingHandCursor
-            anchors.fill: parent
-            hoverEnabled: true
-            onEntered: parent.color = "#808080"
-            onExited: parent.color = colorButton
-            onClicked: {
-                if (functionToCall) {
-                    functionToCall();
-                }
-            }
-        }
     }
 }
