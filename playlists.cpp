@@ -2,14 +2,15 @@
 
 Playlists::Playlists(QObject *parent) : QObject{parent} {}
 
+
+
 void Playlists::createPlayLists(const QString &playListName) {
     QSettings settings("playLists");
     settings.setValue(playListName, playListName);
     qInfo() << playListName;
 }
 
-QStringList Playlists::loadPlayLists() {
-    qInfo() << "jestem";
+void Playlists::loadPlayLists() {
     QSettings settings("playLists");
     QStringList keys = settings.allKeys();
     QStringList playLists;
@@ -18,7 +19,5 @@ QStringList Playlists::loadPlayLists() {
         qInfo() << settings.value(key).toString();
         playLists.append(settings.value(key).toString());
     }
-
-    emit playListsLoaded(playLists);
-    return playLists;
+    setPlayLists(playLists);
 }

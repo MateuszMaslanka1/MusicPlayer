@@ -13,10 +13,6 @@ Item {
 
     Playlists {
         id: playlists
-        onPlayListsLoaded: {
-            console.log("Playlists loaded:", playLists)
-            // listView.model = playLists
-        }
     }
 
     ColumnLayout {
@@ -32,7 +28,7 @@ Item {
             RowLayout {
                 anchors.fill: parent
                 Label {
-                    text: "PlayLists"
+                    text: "PlayList"
                     font.pixelSize: 36
                     color: "#fff"
                     font.weight: 500
@@ -108,7 +104,7 @@ Item {
                     columns: 1
                     spacing: 10
                     Repeater {
-                        model: 2
+                        model: playlists.playLists.length
                         anchors.fill: parent
                         Flow {
                             width: parent.width
@@ -180,5 +176,9 @@ Item {
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        playlists.loadPlayLists()
     }
 }
