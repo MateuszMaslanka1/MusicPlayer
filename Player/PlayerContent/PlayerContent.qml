@@ -39,6 +39,9 @@ Item {
         PlayLists {
             anchors.rightMargin: 10
             anchors.leftMargin: 10
+            onFullPathSong: {
+                handlePath(path)
+            }
         }
     }
 

@@ -23,7 +23,6 @@ void MusicPlayer::findInMusicLibrary() {
     if (!std::filesystem::exists(pathToMusicDirectory) && !std::filesystem::is_directory(pathToMusicDirectory)) {
         std::filesystem::create_directory(pathToMusicDirectory);
         settings.setValue(QString::fromStdString(pathToMusicDirectory), QString::fromStdString(pathToMusicDirectory));
-
     } else if(!settings.contains(pathToMusicDirectory)) {
         settings.setValue(QString::fromStdString(pathToMusicDirectory), QString::fromStdString(pathToMusicDirectory));
     }

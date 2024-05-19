@@ -4,18 +4,23 @@
 #include <QQmlContext>
 #include "./MusicPlayer/musicplayer.h"
 #include "./PlaySong/playsong.h"
+#include "./playlists.h"
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     qmlRegisterType<PlaySong>("PlaySong",1,0,"PlaySong");
+    qmlRegisterType<Playlists>("Playlists",1,0,"Playlists");
 
     QQmlApplicationEngine engine;
     MusicPlayer musicPlayer;
     PlaySong playSong;
+    Playlists playLists;
 
     QObject::connect(&musicPlayer, &MusicPlayer::musicLibraryChanged, &playSong, &PlaySong::updateMusicLibrary);
+
     musicPlayer.findInMusicLibrary();
+    playLists.loadPlayLists();
 
     engine.rootContext()->setContextProperty("musicPlayer", &musicPlayer);
 
