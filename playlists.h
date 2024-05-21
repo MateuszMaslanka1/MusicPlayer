@@ -12,6 +12,7 @@ class Playlists : public QObject
 
 public:
     explicit Playlists(QObject *parent = nullptr);
+    Q_INVOKABLE void addSongToPlayList(const QString &playListName, const QString &songName);
     Q_INVOKABLE void createPlayLists(const QString &playListName);
     Q_INVOKABLE void loadPlayLists();
 

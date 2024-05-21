@@ -21,10 +21,10 @@ Grid {
             anchors.centerIn: parent;
             width: 35
             height: 35
-            onClicked: {
-                songName(musicPlayer.someData[index]);
-                fullPathSong(musicPlayer.path[index]);
-            }
+            // onClicked: {
+            //     songName(musicPlayer.someData[index]);
+            //     fullPathSong(musicPlayer.path[index]);
+            // }
         }
     }
     Rectangle {
@@ -34,7 +34,7 @@ Grid {
         Text {
             anchors.centerIn: parent;
             color: "#fff";
-            text: musicPlayer.someData[index]
+            // text: musicPlayer.someData[index]
         }
     }
     Rectangle {
@@ -45,15 +45,15 @@ Grid {
         Text {
             anchors.centerIn: parent;
             color: "#fff";
-            text: {
-                const songLength = musicPlayer.songLenght[index]
-                const parts = songLength.split(":")
-                if (parts.length === 2 && parseInt(parts[1]) < 10) {
-                    return parts[0] + ":0" + parts[1]
-                } else {
-                    return songLength
-                }
-            }
+        //     text: {
+        //         const songLength = musicPlayer.songLenght[index]
+        //         const parts = songLength.split(":")
+        //         if (parts.length === 2 && parseInt(parts[1]) < 10) {
+        //             return parts[0] + ":0" + parts[1]
+        //         } else {
+        //             return songLength
+        //         }
+        //     }
         }
     }
 }

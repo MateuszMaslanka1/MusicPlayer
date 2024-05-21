@@ -6,6 +6,8 @@ import PlaySong 1.0
 import QtQuick.Controls 2.15
 import Qt.labs.platform 1.0
 import Playlists 1.0
+import QtQuick.Dialogs
+import QtCore 6.7
 Item {
     anchors.fill: parent
     signal songName(string name)
@@ -130,6 +132,17 @@ Item {
                                             height: parent.height
                                             color: parent.hovered ? "#808080" : "#363434"
                                             radius: 5
+                                            FileDialog {
+                                                id: fileDialog
+                                                title: "Please choose a file"
+                                                onAccepted: {
+                                                    console.log("You chose: " + fileDialog.currentFile)
+                                                    playlists.addSongToPlayList(playlists.playLists[index],  fileDialog.currentFile)
+                                                }
+                                                onRejected: {
+                                                    console.log("rejected")
+                                                }
+                                            }
                                             MouseArea {
                                                 cursorShape: Qt.PointingHandCursor
                                                 anchors.fill: parent
@@ -147,7 +160,7 @@ Item {
                                     Text {
                                         anchors.centerIn: parent;
                                         color: "#fff";
-                                        text: "musicPlayer.someData[index]"
+                                        text: playlists.playLists[index]
                                     }
                                 }
                                 Rectangle {
@@ -170,7 +183,7 @@ Item {
                                     }
                                 }
                             }
-                            SinglePlayList {}
+                            // SinglePlayList {}
                         }
                     }
                 }
