@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QSettings>
 #include <QStringList>
-
+#include <QList>
 class Playlists : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList playLists READ playLists WRITE setPlayLists NOTIFY playListsChanged)
+    Q_PROPERTY(QStringList songForPlayLists READ songForPlayLists WRITE setSongForPlayLists NOTIFY songForPlayListsChanged)
 
 public:
     explicit Playlists(QObject *parent = nullptr);
@@ -17,12 +18,16 @@ public:
     Q_INVOKABLE void loadPlayLists();
 
     QStringList playLists() const {
-        qInfo() << m_playLists;
         return m_playLists;
+    }
+
+    QStringList songForPlayLists() const {
+        return m_songForPlayLists;
     }
 
 signals:
     void playListsChanged();
+    void songForPlayListsChanged();
 
 public slots:
     void setPlayLists(const QStringList &playLists) {
@@ -32,8 +37,17 @@ public slots:
         }
     }
 
+    void setSongForPlayLists(const QStringList &playListsSong) {
+        if (m_songForPlayLists != playListsSong) {
+            m_songForPlayLists = playListsSong;
+            emit songForPlayListsChanged();
+        }
+    }
+
 private:
     QStringList m_playLists;
+    QStringList m_songForPlayLists;
+    QSettings settings;
 };
 
 #endif // PLAYLISTS_H

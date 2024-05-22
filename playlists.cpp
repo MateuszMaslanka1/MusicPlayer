@@ -13,14 +13,16 @@ void Playlists::loadPlayLists() {
     QSettings settings("playLists");
     QStringList keys = settings.allKeys();
     QStringList playLists;
+    QStringList songForPlayLists;
 
     foreach (const QString &key, keys) {
         QStringList songs = settings.value(key).toStringList();
         qInfo() << "Playlist:" << key << "Songs:" << songs;
         playLists.append(key);
+        songForPlayLists.append(songs);
     }
     setPlayLists(playLists);
-
+    setSongForPlayLists(songForPlayLists);
 }
 
 void Playlists::addSongToPlayList(const QString &playListName, const QString &songName) {
@@ -29,7 +31,6 @@ void Playlists::addSongToPlayList(const QString &playListName, const QString &so
     if (!songs.contains(songName)) {
         songs.append(songName);
         settings.setValue(playListName, songs);
-        qInfo() << "Added song" << songName << "to playlist" << playListName;
     } else {
         qInfo() << "Song" << songName << "already exists in playlist" << playListName;
     }

@@ -7,6 +7,7 @@ import QtQuick.Controls 2.15
 import Qt.labs.platform 1.0
 
 Grid {
+
     width: parent.width
     rows: 1
     columns: 3

@@ -183,7 +183,11 @@ Item {
                                     }
                                 }
                             }
-                            // SinglePlayList {}
+                            // Repeater {
+                            //     SinglePlayList {
+
+                            //     }
+                            // }
                         }
                     }
                 }
@@ -193,5 +197,6 @@ Item {
 
     Component.onCompleted: {
         playlists.loadPlayLists()
+        // console.log(playlists.songForPlayLists);
     }
 }
