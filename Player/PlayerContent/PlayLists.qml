@@ -90,6 +90,7 @@ Item {
         }
 
         Rectangle {
+            property int playListsIndex: 0
             Layout.preferredWidth: parent.width
             Layout.preferredHeight: parent.height * 0.90
             Layout.fillHeight: true
@@ -108,6 +109,7 @@ Item {
                     Repeater {
                         model: playlists.playLists.length
                         anchors.fill: parent
+
                         Flow {
                             width: parent.width
                             spacing: 5
@@ -120,6 +122,7 @@ Item {
                                     height: 50
                                     radius: 5
                                     color: "#404040"
+                                    property int playListsIndex: index
                                     Button {
                                         anchors.centerIn: parent;
                                         text: "Otwórz eksplorator plikow"
@@ -183,11 +186,13 @@ Item {
                                     }
                                 }
                             }
-                            // Repeater {
-                            //     SinglePlayList {
 
-                            //     }
-                            // }
+                            Repeater {
+                                model: playlists.songForPlayLists[index]
+                                SinglePlayList {
+                                    pathSong: modelData
+                                }
+                            }
                         }
                     }
                 }
@@ -197,6 +202,5 @@ Item {
 
     Component.onCompleted: {
         playlists.loadPlayLists()
-        // console.log(playlists.songForPlayLists);
     }
 }

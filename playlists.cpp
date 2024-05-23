@@ -13,7 +13,7 @@ void Playlists::loadPlayLists() {
     QSettings settings("playLists");
     QStringList keys = settings.allKeys();
     QStringList playLists;
-    QStringList songForPlayLists;
+    QList<QStringList> songForPlayLists;
 
     foreach (const QString &key, keys) {
         QStringList songs = settings.value(key).toStringList();
@@ -22,6 +22,7 @@ void Playlists::loadPlayLists() {
         songForPlayLists.append(songs);
     }
     setPlayLists(playLists);
+    // qInfo() << songForPlayLists;
     setSongForPlayLists(songForPlayLists);
 }
 

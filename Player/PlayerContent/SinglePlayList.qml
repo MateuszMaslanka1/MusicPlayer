@@ -7,7 +7,7 @@ import QtQuick.Controls 2.15
 import Qt.labs.platform 1.0
 
 Grid {
-
+    property string pathSong: ''
     width: parent.width
     rows: 1
     columns: 3
@@ -35,7 +35,7 @@ Grid {
         Text {
             anchors.centerIn: parent;
             color: "#fff";
-            // text: musicPlayer.someData[index]
+            text: pathSong
         }
     }
     Rectangle {

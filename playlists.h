@@ -9,7 +9,7 @@ class Playlists : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList playLists READ playLists WRITE setPlayLists NOTIFY playListsChanged)
-    Q_PROPERTY(QStringList songForPlayLists READ songForPlayLists WRITE setSongForPlayLists NOTIFY songForPlayListsChanged)
+    Q_PROPERTY(QList<QStringList> songForPlayLists READ songForPlayLists WRITE setSongForPlayLists NOTIFY songForPlayListsChanged)
 
 public:
     explicit Playlists(QObject *parent = nullptr);
@@ -21,7 +21,7 @@ public:
         return m_playLists;
     }
 
-    QStringList songForPlayLists() const {
+    QList<QStringList> songForPlayLists() const {
         return m_songForPlayLists;
     }
 
@@ -37,7 +37,7 @@ public slots:
         }
     }
 
-    void setSongForPlayLists(const QStringList &playListsSong) {
+    void setSongForPlayLists(const QList<QStringList> &playListsSong) {
         if (m_songForPlayLists != playListsSong) {
             m_songForPlayLists = playListsSong;
             emit songForPlayListsChanged();
@@ -46,7 +46,7 @@ public slots:
 
 private:
     QStringList m_playLists;
-    QStringList m_songForPlayLists;
+    QList<QStringList> m_songForPlayLists;
     QSettings settings;
 };
 
