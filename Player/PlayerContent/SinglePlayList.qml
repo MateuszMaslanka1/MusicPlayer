@@ -8,6 +8,8 @@ import Qt.labs.platform 1.0
 
 Grid {
     property string pathSong: ''
+    signal fullPathSong(string path)
+
     width: parent.width
     rows: 1
     columns: 3
@@ -22,10 +24,9 @@ Grid {
             anchors.centerIn: parent;
             width: 35
             height: 35
-            // onClicked: {
-            //     songName(musicPlayer.someData[index]);
-            //     fullPathSong(musicPlayer.path[index]);
-            // }
+            onClicked: {
+                fullPathSong(pathSong);
+            }
         }
     }
     Rectangle {

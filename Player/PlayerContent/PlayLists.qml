@@ -10,7 +10,6 @@ import QtQuick.Dialogs
 import QtCore 6.7
 Item {
     anchors.fill: parent
-    signal songName(string name)
     signal fullPathSong(string path)
 
     Playlists {
@@ -90,7 +89,6 @@ Item {
         }
 
         Rectangle {
-            property int playListsIndex: 0
             Layout.preferredWidth: parent.width
             Layout.preferredHeight: parent.height * 0.90
             Layout.fillHeight: true
@@ -191,6 +189,9 @@ Item {
                                 model: playlists.songForPlayLists[index]
                                 SinglePlayList {
                                     pathSong: modelData
+                                    onFullPathSong: {
+                                        handlePath(path)
+                                    }
                                 }
                             }
                         }

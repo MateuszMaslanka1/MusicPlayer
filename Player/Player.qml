@@ -36,7 +36,7 @@ Item {
                 }
             }
 
-            PlayerContent  {
+            PlayerContent {
                 id: playerContent
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -47,7 +47,7 @@ Item {
             }
         }
 
-        PlayerController  {
+        PlayerController {
             id: playerController
             Layout.topMargin: 0
             Layout.fillWidth: true
