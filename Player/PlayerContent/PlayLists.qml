@@ -18,7 +18,6 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-
         Rectangle {
             Layout.preferredWidth: parent.width
             Layout.preferredHeight: parent.height * 0.10
@@ -45,23 +44,34 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: "lightgrey"
+                        color: "#545454"
+                        radius: 5
 
-                        TextInput {
-                            id: playListNameInput
-                            anchors.centerIn: parent
-                            width: parent.width - 40
-                            // placeholderText: "Wpisz coś..."
-                        }
+                        Column {
+                            anchors.fill: parent
+                            anchors.margins: 10
+                            spacing: 10
 
-                        Button {
-                            text: "Zamknij modal"
-                            anchors {
-                                horizontalCenter: parent.horizontalCenter
-                                bottom: parent.bottom
-                                bottomMargin: 20
+                            Rectangle {
+                                width: parent.width
+                                color: "#fff"
+                                height: 30
+                                radius: 5
+                                TextInput {
+                                    id: playListNameInput
+                                    width: parent.width
+                                    padding: 5
+                                }
                             }
-                            onClicked: playlists.createPlayLists(playListNameInput.text);
+
+                            Button {
+                                text: "Dodaj utwór"
+                                width: parent.width
+                                onClicked: {
+                                    playlists.createPlayLists(playListNameInput.text)
+                                    modal.close()
+                                }
+                            }
                         }
                     }
                 }
@@ -70,6 +80,7 @@ Item {
                     text: "Utwórz liste odtwarzania"
                     Layout.alignment: Qt.AlignRight
                     padding: 10
+
 
                     Rectangle {
                         width: parent.width
@@ -87,7 +98,6 @@ Item {
                 }
             }
         }
-
         Rectangle {
             Layout.preferredWidth: parent.width
             Layout.preferredHeight: parent.height * 0.90
@@ -107,84 +117,89 @@ Item {
                     Repeater {
                         model: playlists.playLists.length
                         anchors.fill: parent
-
                         Flow {
                             width: parent.width
                             spacing: 5
-                            Grid {
+                            Rectangle {
                                 width: parent.width
-                                rows: 1
-                                columns: 3
-                                Rectangle {
-                                    width: 250
-                                    height: 50
-                                    radius: 5
-                                    color: "#404040"
-                                    property int playListsIndex: index
-                                    Button {
-                                        anchors.centerIn: parent;
-                                        text: "Otwórz eksplorator plikow"
-                                        Layout.alignment: Qt.AlignRight
-                                        padding: 10
-                                        width: parent.width
-                                        height: 30
-                                        Rectangle {
-                                            width: parent.width
-                                            height: parent.height
-                                            color: parent.hovered ? "#808080" : "#363434"
-                                            radius: 5
-                                            FileDialog {
-                                                id: fileDialog
-                                                title: "Please choose a file"
-                                                onAccepted: {
-                                                    console.log("You chose: " + fileDialog.currentFile)
-                                                    playlists.addSongToPlayList(playlists.playLists[index],  fileDialog.currentFile)
-                                                }
-                                                onRejected: {
-                                                    console.log("rejected")
-                                                }
-                                            }
-                                            MouseArea {
-                                                cursorShape: Qt.PointingHandCursor
-                                                anchors.fill: parent
-                                                onClicked: {
-                                                    fileDialog.open()
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                Rectangle {
-                                    width: (parent.width * 0.95) - 250
-                                    height: 50
-                                    color: "#404040"
-                                    Text {
-                                        anchors.centerIn: parent;
-                                        color: "#fff";
-                                        text: playlists.playLists[index]
-                                    }
-                                }
-                                Rectangle {
-                                    width: (parent.width * 0.05)
-                                    height: 50
-                                    color: "#404040"
-                                    radius: 5
-                                    Text {
-                                        anchors.centerIn: parent;
-                                        color: "#fff";
-                                        text: {
-                                            const songLength = musicPlayer.songLenght[index]
-                                            const parts = songLength.split(":")
-                                            if (parts.length === 2 && parseInt(parts[1]) < 10) {
-                                                return parts[0] + ":0" + parts[1]
-                                            } else {
-                                                return songLength
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                                height: 50
+                                radius: 5
+                                color: "#404040"
+                                Grid {
+                                    width: parent.width
+                                    rows: 1
+                                    columns: 3
+                                    Rectangle {
+                                        width: 250
+                                        height: 50
+                                        radius: 5
+                                        color: "#404040"
+                                        property int playListsIndex: index
+                                        Button {
+                                            anchors.centerIn: parent;
+                                            text: "Otwórz eksplorator plikow"
+                                            Layout.alignment: Qt.AlignRight
+                                            padding: 10
+                                            width: parent.width - 17
+                                            height: 30
+                                            Rectangle {
+                                                width: parent.width
+                                                height: parent.height
+                                                color: parent.hovered ? "#808080" : "#363434"
 
+                                                FileDialog {
+                                                    id: fileDialog
+                                                    title: "Please choose a file"
+                                                    onAccepted: {
+                                                        console.log("You chose: " + fileDialog.currentFile)
+                                                        playlists.addSongToPlayList(playlists.playLists[index],  fileDialog.currentFile)
+                                                    }
+                                                    onRejected: {
+                                                        console.log("rejected")
+                                                    }
+                                                }
+                                                MouseArea {
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    anchors.fill: parent
+                                                    onClicked: {
+                                                        fileDialog.open()
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    Rectangle {
+                                        width: (parent.width * 0.95) - 250
+                                        height: 50
+                                        color: "#404040"
+                                        Text {
+                                            anchors.centerIn: parent;
+                                            color: "#fff";
+                                            text: playlists.playLists[index]
+                                        }
+                                    }
+                                    Rectangle {
+                                        width: (parent.width * 0.05)
+                                        height: 50
+                                        radius: 5
+                                        color: "#404040"
+                                        Text {
+                                            anchors.centerIn: parent;
+                                            color: "#fff";
+                                            text: {
+                                                const songLength = musicPlayer.songLenght[index]
+                                                const parts = songLength.split(":")
+                                                if (parts.length === 2 && parseInt(parts[1]) < 10) {
+                                                    return parts[0] + ":0" + parts[1]
+                                                } else {
+                                                    return songLength
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
                             Repeater {
                                 model: playlists.songForPlayLists[index]
                                 SinglePlayList {

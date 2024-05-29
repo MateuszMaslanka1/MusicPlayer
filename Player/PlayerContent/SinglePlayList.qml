@@ -5,57 +5,65 @@ import QtQuick.Layouts 1.15
 import PlaySong 1.0
 import QtQuick.Controls 2.15
 import Qt.labs.platform 1.0
-
-Grid {
+Item {
     property string pathSong: ''
     signal fullPathSong(string path)
-
     width: parent.width
-    rows: 1
-    columns: 3
-    spacing: 5
+    height: 50
     Rectangle {
-        width: 50
+        width: parent.width
         height: 50
-        radius: 5
         color: "#404040"
-        Button {
-            text: "P"
-            anchors.centerIn: parent;
-            width: 35
-            height: 35
-            onClicked: {
-                fullPathSong(pathSong);
+        radius: 5
+        Grid {
+            width: parent.width
+            rows: 1
+            columns: 3
+            // spacing: 5
+            Rectangle {
+                width: 50
+                height: 50
+                color: "#404040"
+                radius: 5
+                Button {
+                    text: "P"
+                    anchors.centerIn: parent;
+                    width: 35
+                    height: 35
+                    onClicked: {
+                        fullPathSong(pathSong);
+                    }
+                }
             }
-        }
-    }
-    Rectangle {
-        width: (parent.width * 0.95) - 65
-        height: 50
-        color: "#404040"
-        Text {
-            anchors.centerIn: parent;
-            color: "#fff";
-            text: pathSong
-        }
-    }
-    Rectangle {
-        width: (parent.width * 0.05)
-        height: 50
-        color: "#404040"
-        radius: 5
-        Text {
-            anchors.centerIn: parent;
-            color: "#fff";
-        //     text: {
-        //         const songLength = musicPlayer.songLenght[index]
-        //         const parts = songLength.split(":")
-        //         if (parts.length === 2 && parseInt(parts[1]) < 10) {
-        //             return parts[0] + ":0" + parts[1]
-        //         } else {
-        //             return songLength
-        //         }
-        //     }
+            Rectangle {
+                width: (parent.width * 0.95) - 100
+                height: 50
+                color: "#404040"
+                Text {
+                    anchors.centerIn: parent;
+                    color: "#fff";
+                    text: pathSong
+                }
+            }
+            Rectangle {
+                width: 50
+                height: 50
+                color: "#404040"
+                radius: 5
+                Text {
+                    anchors.centerIn: parent;
+                    color: "#fff";
+                //     text: {
+                //         const songLength = musicPlayer.songLenght[index]
+                //         const parts = songLength.split(":")
+                //         if (parts.length === 2 && parseInt(parts[1]) < 10) {
+                //             return parts[0] + ":0" + parts[1]
+                //         } else {
+                //             return songLength
+                //         }
+                //     }
+                }
+            }
         }
     }
 }
