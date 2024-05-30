@@ -81,7 +81,6 @@ Item {
                     Layout.alignment: Qt.AlignRight
                     padding: 10
 
-
                     Rectangle {
                         width: parent.width
                         height: parent.height
@@ -115,6 +114,7 @@ Item {
                     columns: 1
                     spacing: 10
                     Repeater {
+                        id: playListName
                         model: playlists.playLists.length
                         anchors.fill: parent
                         Flow {
@@ -124,7 +124,7 @@ Item {
                                 width: parent.width
                                 height: 50
                                 radius: 5
-                                color: "#404040"
+                                color: "#9E9E9E"
                                 Grid {
                                     width: parent.width
                                     rows: 1
@@ -133,8 +133,7 @@ Item {
                                         width: 250
                                         height: 50
                                         radius: 5
-                                        color: "#404040"
-                                        property int playListsIndex: index
+                                        color: "#9E9E9E"
                                         Button {
                                             anchors.centerIn: parent;
                                             text: "Otwórz eksplorator plikow"
@@ -171,10 +170,10 @@ Item {
                                     Rectangle {
                                         width: (parent.width * 0.95) - 250
                                         height: 50
-                                        color: "#404040"
+                                        color: "#9E9E9E"
                                         Text {
                                             anchors.centerIn: parent;
-                                            color: "#fff";
+                                            color: "#000";
                                             text: playlists.playLists[index]
                                         }
                                     }
@@ -182,23 +181,18 @@ Item {
                                         width: (parent.width * 0.05)
                                         height: 50
                                         radius: 5
-                                        color: "#404040"
-                                        Text {
+                                        color: "#9E9E9E"
+                                        Button {
+                                            text: "D"
                                             anchors.centerIn: parent;
-                                            color: "#fff";
-                                            text: {
-                                                const songLength = musicPlayer.songLenght[index]
-                                                const parts = songLength.split(":")
-                                                if (parts.length === 2 && parseInt(parts[1]) < 10) {
-                                                    return parts[0] + ":0" + parts[1]
-                                                } else {
-                                                    return songLength
-                                                }
+                                            width: 35
+                                            height: 35
+                                            onClicked: {
+                                                playlists.deletePlayList(playlists.playLists[index]);
                                             }
                                         }
                                     }
                                 }
-
                             }
                             Repeater {
                                 model: playlists.songForPlayLists[index]
@@ -206,6 +200,9 @@ Item {
                                     pathSong: modelData
                                     onFullPathSong: {
                                         handlePath(path)
+                                    }
+                                    onRemoveSong: {
+                                        console.log(playListName.index);
                                     }
                                 }
                             }

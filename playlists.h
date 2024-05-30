@@ -16,6 +16,8 @@ public:
     Q_INVOKABLE void addSongToPlayList(const QString &playListName, const QString &songName);
     Q_INVOKABLE void createPlayLists(const QString &playListName);
     Q_INVOKABLE void loadPlayLists();
+    Q_INVOKABLE void deletePlayList(const QString &playListName);
+    Q_INVOKABLE void removeSongFromPlayList(const QString &playListName, const QString &songName);
 
     QStringList playLists() const {
         return m_playLists;

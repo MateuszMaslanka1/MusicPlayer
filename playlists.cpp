@@ -36,3 +36,26 @@ void Playlists::addSongToPlayList(const QString &playListName, const QString &so
         qInfo() << "Song" << songName << "already exists in playlist" << playListName;
     }
 }
+
+void Playlists::deletePlayList(const QString &playListName) {
+    QSettings settings("playLists");
+    if (settings.contains(playListName)) {
+        settings.remove(playListName);
+        qInfo() << "Deleted playlist" << playListName;
+    } else {
+        qInfo() << "Playlist" << playListName << "does not exist";
+    }
+}
+
+void Playlists::removeSongFromPlayList(const QString &playListName, const QString &songName) {
+    // QSettings settings("playLists");
+    // QStringList songs = settings.value(playListName).toStringList();
+      qInfo() << playListName;
+    // if (songs.contains(songName)) {
+    //     // songs.removeAll(songName);
+    //     // settings.setValue(playListName, songs);
+    //     qInfo() << "Removed song" << songName << "from playlist" << playListName;
+    // } else {
+    //     qInfo() << "Song" << songName << "not found in playlist" << playListName;
+    // }
+}

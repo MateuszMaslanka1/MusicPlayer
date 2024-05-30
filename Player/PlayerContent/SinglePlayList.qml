@@ -5,9 +5,12 @@ import QtQuick.Layouts 1.15
 import PlaySong 1.0
 import QtQuick.Controls 2.15
 import Qt.labs.platform 1.0
+
+
 Item {
     property string pathSong: ''
     signal fullPathSong(string path)
+    signal removeSong(string path)
     width: parent.width
     height: 50
     Rectangle {
@@ -50,18 +53,14 @@ Item {
                 height: 50
                 color: "#404040"
                 radius: 5
-                Text {
+                Button {
+                    text: "P"
                     anchors.centerIn: parent;
-                    color: "#fff";
-                //     text: {
-                //         const songLength = musicPlayer.songLenght[index]
-                //         const parts = songLength.split(":")
-                //         if (parts.length === 2 && parseInt(parts[1]) < 10) {
-                //             return parts[0] + ":0" + parts[1]
-                //         } else {
-                //             return songLength
-                //         }
-                //     }
+                    width: 35
+                    height: 35
+                    onClicked: {
+                        removeSong(pathSong);
+                    }
                 }
             }
         }
