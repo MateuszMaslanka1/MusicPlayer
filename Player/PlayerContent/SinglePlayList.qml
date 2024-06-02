@@ -8,11 +8,15 @@ import Qt.labs.platform 1.0
 
 
 Item {
-    property string pathSong: ''
+    property string songName
     signal fullPathSong(string path)
     signal removeSong(string path)
     width: parent.width
     height: 50
+    Component.onCompleted: {
+        console.log(playlistsName)
+    }
+
     Rectangle {
         width: parent.width
         height: 50
@@ -34,7 +38,7 @@ Item {
                     width: 35
                     height: 35
                     onClicked: {
-                        fullPathSong(pathSong);
+                        fullPathSong(songName);
                     }
                 }
             }
@@ -45,7 +49,7 @@ Item {
                 Text {
                     anchors.centerIn: parent;
                     color: "#fff";
-                    text: pathSong
+                    text: songName
                 }
             }
             Rectangle {
@@ -59,11 +63,12 @@ Item {
                     width: 35
                     height: 35
                     onClicked: {
-                        removeSong(pathSong);
+                        removeSong(songName);
                     }
                 }
             }
         }
     }
+
 }
 

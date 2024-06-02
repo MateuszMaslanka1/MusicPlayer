@@ -115,8 +115,11 @@ Item {
                     spacing: 10
                     Repeater {
                         id: playListName
-                        model: playlists.playLists.length
+                        model: playlists.playlistsNameAndSong
                         anchors.fill: parent
+                        // delegate: Item {
+                        //     property int outerIndex: index
+                        //     anchors.fill: parent
                         Flow {
                             width: parent.width
                             spacing: 5
@@ -150,11 +153,10 @@ Item {
                                                     id: fileDialog
                                                     title: "Please choose a file"
                                                     onAccepted: {
-                                                        console.log("You chose: " + fileDialog.currentFile)
-                                                        playlists.addSongToPlayList(playlists.playLists[index],  fileDialog.currentFile)
+                                                        playlists.addSongToPlayList(playlists.playlistsNameAndSong[index].name,  fileDialog.currentFile)
                                                     }
                                                     onRejected: {
-                                                        console.log("rejected")
+
                                                     }
                                                 }
                                                 MouseArea {
@@ -174,7 +176,7 @@ Item {
                                         Text {
                                             anchors.centerIn: parent;
                                             color: "#000";
-                                            text: playlists.playLists[index]
+                                            text: modelData.name
                                         }
                                     }
                                     Rectangle {
@@ -183,30 +185,30 @@ Item {
                                         radius: 5
                                         color: "#9E9E9E"
                                         Button {
+
                                             text: "D"
                                             anchors.centerIn: parent;
                                             width: 35
                                             height: 35
                                             onClicked: {
-                                                playlists.deletePlayList(playlists.playLists[index]);
+                                                playlists.deletePlayList(modelData.name);
                                             }
                                         }
                                     }
                                 }
                             }
                             Repeater {
-                                model: playlists.songForPlayLists[index]
+                                model: modelData.songs
                                 SinglePlayList {
-                                    pathSong: modelData
+                                    songName: modelData
                                     onFullPathSong: {
-                                        handlePath(path)
-                                    }
-                                    onRemoveSong: {
-                                        console.log(playListName.index);
+                                        console.log(path)
+                                         handlePath(path)
                                     }
                                 }
                             }
                         }
+                        // }
                     }
                 }
             }

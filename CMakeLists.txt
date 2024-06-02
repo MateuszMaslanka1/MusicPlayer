@@ -29,6 +29,7 @@ qt_add_qml_module(appMusicPlayer
     QML_FILES Player/PlayerContent/PlayLists.qml
     QML_FILES Player/PlayerContent/SinglePlayList.qml
     SOURCES playlists.h playlists.cpp
+    SOURCES playlist.h
 )
 
 target_link_libraries(appMusicPlayer

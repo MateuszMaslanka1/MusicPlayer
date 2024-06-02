@@ -6,24 +6,19 @@ void Playlists::createPlayLists(const QString &playListName) {
     QSettings settings("playLists");
     QStringList emptyList;
     settings.setValue(playListName, emptyList);
-    qInfo() << "Created playlist" << playListName;
 }
 
 void Playlists::loadPlayLists() {
     QSettings settings("playLists");
     QStringList keys = settings.allKeys();
-    QStringList playLists;
-    QList<QStringList> songForPlayLists;
+    QList<Playlist*> playlists;
 
     foreach (const QString &key, keys) {
         QStringList songs = settings.value(key).toStringList();
         qInfo() << "Playlist:" << key << "Songs:" << songs;
-        playLists.append(key);
-        songForPlayLists.append(songs);
+        playlists.append(new Playlist(key, songs));
     }
-    setPlayLists(playLists);
-    // qInfo() << songForPlayLists;
-    setSongForPlayLists(songForPlayLists);
+    setPlaylists(playlists);
 }
 
 void Playlists::addSongToPlayList(const QString &playListName, const QString &songName) {

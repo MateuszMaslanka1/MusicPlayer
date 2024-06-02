@@ -1,14 +1,15 @@
 #ifndef PLAYLISTS_H
 #define PLAYLISTS_H
-
+#include "playlist.h"
 #include <QObject>
 #include <QSettings>
 #include <QStringList>
 #include <QList>
+
 class Playlists : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList playLists READ playLists WRITE setPlayLists NOTIFY playListsChanged)
+    Q_PROPERTY(QList<Playlist*> playlistsNameAndSong READ playlistsNameAndSong WRITE setPlaylists NOTIFY playlistsChanged)
     Q_PROPERTY(QList<QStringList> songForPlayLists READ songForPlayLists WRITE setSongForPlayLists NOTIFY songForPlayListsChanged)
 
 public:
@@ -19,8 +20,8 @@ public:
     Q_INVOKABLE void deletePlayList(const QString &playListName);
     Q_INVOKABLE void removeSongFromPlayList(const QString &playListName, const QString &songName);
 
-    QStringList playLists() const {
-        return m_playLists;
+    QList<Playlist*> playlistsNameAndSong() const {
+        return m_playlists;
     }
 
     QList<QStringList> songForPlayLists() const {
@@ -28,15 +29,13 @@ public:
     }
 
 signals:
-    void playListsChanged();
+    void playlistsChanged();
     void songForPlayListsChanged();
 
 public slots:
-    void setPlayLists(const QStringList &playLists) {
-        if (m_playLists != playLists) {
-            m_playLists = playLists;
-            emit playListsChanged();
-        }
+    void setPlaylists(const QList<Playlist*> &playlists) {
+        m_playlists = playlists;
+        emit playlistsChanged();
     }
 
     void setSongForPlayLists(const QList<QStringList> &playListsSong) {
@@ -47,7 +46,7 @@ public slots:
     }
 
 private:
-    QStringList m_playLists;
+    QList<Playlist*> m_playlists;
     QList<QStringList> m_songForPlayLists;
     QSettings settings;
 };
