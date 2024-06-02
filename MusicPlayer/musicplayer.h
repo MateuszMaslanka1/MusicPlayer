@@ -5,7 +5,7 @@
 #include <QVector>
 #include <QString>
 #include <QMediaPlayer>
-
+#include "./DecodeMusicData/decodemusicdata.h"
 class MusicPlayer : public QObject
 {
     Q_OBJECT
@@ -19,6 +19,7 @@ public:
     void findInMusicLibrary();
     Q_INVOKABLE void getPathToDirectory(QString pathToDirectory);
     QVector<QString>getMusicLibrary();
+    DecodeMusicData decodeMusicData;
 
     QVector<QString> songLenght() const {
         return m_songLenght;

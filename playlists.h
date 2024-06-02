@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QStringList>
 #include <QList>
+#include <./DecodeMusicData/decodemusicdata.h>
 
 class Playlists : public QObject
 {
@@ -19,6 +20,7 @@ public:
     Q_INVOKABLE void loadPlayLists();
     Q_INVOKABLE void deletePlayList(const QString &playListName);
     Q_INVOKABLE void removeSongFromPlayList(const QString &playListName, const QString &songName);
+    DecodeMusicData decodeMusicData;
 
     QList<Playlist*> playlistsNameAndSong() const {
         return m_playlists;

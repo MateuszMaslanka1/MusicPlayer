@@ -8,6 +8,7 @@ import Qt.labs.platform 1.0
 import Playlists 1.0
 import QtQuick.Dialogs
 import QtCore 6.7
+
 Item {
     anchors.fill: parent
     signal fullPathSong(string path)
@@ -108,7 +109,7 @@ Item {
                 anchors.left: parent.left
                 width: parent.width
                 height: parent.height
-                clip : true
+                clip: true
                 Grid {
                     anchors.fill: parent
                     columns: 1
@@ -117,10 +118,8 @@ Item {
                         id: playListName
                         model: playlists.playlistsNameAndSong
                         anchors.fill: parent
-                        // delegate: Item {
-                        //     property int outerIndex: index
-                        //     anchors.fill: parent
-                        Flow {
+                        delegate: Flow {
+                            property string playlistName: modelData.name
                             width: parent.width
                             spacing: 5
                             Rectangle {
@@ -138,7 +137,7 @@ Item {
                                         radius: 5
                                         color: "#9E9E9E"
                                         Button {
-                                            anchors.centerIn: parent;
+                                            anchors.centerIn: parent
                                             text: "Otwórz eksplorator plikow"
                                             Layout.alignment: Qt.AlignRight
                                             padding: 10
@@ -153,10 +152,7 @@ Item {
                                                     id: fileDialog
                                                     title: "Please choose a file"
                                                     onAccepted: {
-                                                        playlists.addSongToPlayList(playlists.playlistsNameAndSong[index].name,  fileDialog.currentFile)
-                                                    }
-                                                    onRejected: {
-
+                                                        playlists.addSongToPlayList(playlists.playlistsNameAndSong[index].name, fileDialog.currentFile)
                                                     }
                                                 }
                                                 MouseArea {
@@ -174,8 +170,8 @@ Item {
                                         height: 50
                                         color: "#9E9E9E"
                                         Text {
-                                            anchors.centerIn: parent;
-                                            color: "#000";
+                                            anchors.centerIn: parent
+                                            color: "#000"
                                             text: modelData.name
                                         }
                                     }
@@ -185,13 +181,12 @@ Item {
                                         radius: 5
                                         color: "#9E9E9E"
                                         Button {
-
                                             text: "D"
-                                            anchors.centerIn: parent;
+                                            anchors.centerIn: parent
                                             width: 35
                                             height: 35
                                             onClicked: {
-                                                playlists.deletePlayList(modelData.name);
+                                                playlists.deletePlayList(modelData.name)
                                             }
                                         }
                                     }
@@ -199,16 +194,19 @@ Item {
                             }
                             Repeater {
                                 model: modelData.songs
-                                SinglePlayList {
-                                    songName: modelData
+                                SinglePlayList{
+                                    songName: modelData.songName
+                                    songTime: modelData.songTime
+                                    playlistsIndex: playlistName
                                     onFullPathSong: {
-                                        console.log(path)
-                                         handlePath(path)
+                                        handlePath(path)
+                                    }
+                                    onRemoveSong: {
+                                        playlists.removeSongFromPlayList(songName, playlistName)
                                     }
                                 }
                             }
                         }
-                        // }
                     }
                 }
             }
