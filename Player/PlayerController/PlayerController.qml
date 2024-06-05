@@ -10,6 +10,8 @@ Item {
     width: root.width
     height: root.height
     property string getPathName: ""
+    property string getPlaylists: ""
+    property bool getIsMusicLibrary: false
 
     PlaySong {
         id: playSong
@@ -24,6 +26,20 @@ Item {
             playSong.playSound(getPathName);
         }
         getPathName = "";
+    }
+
+    onGetPlaylistsChanged: {
+        if (getPlaylists) {
+            playSong.getPlaylist(getPlaylists, false);
+        }
+        getIsMusicLibrary = false;
+    }
+
+    onGetIsMusicLibraryChanged: {
+        if (getIsMusicLibrary) {
+            playSong.getPlaylist(getPlaylists, getIsMusicLibrary);
+        }
+        getPlaylists = "";
     }
 
     Rectangle {

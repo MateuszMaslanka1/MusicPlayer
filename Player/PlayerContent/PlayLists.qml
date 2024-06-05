@@ -12,7 +12,7 @@ import QtCore 6.7
 Item {
     anchors.fill: parent
     signal fullPathSong(string path)
-
+    signal playlistsName(string playlistsName)
     Playlists {
         id: playlists
     }
@@ -119,7 +119,7 @@ Item {
                         model: playlists.playlistsNameAndSong
                         anchors.fill: parent
                         delegate: Flow {
-                            property string playlistName: modelData.name
+                            property string playlistNameDelegate: modelData.name
                             width: parent.width
                             spacing: 5
                             Rectangle {
@@ -197,9 +197,12 @@ Item {
                                 SinglePlayList{
                                     songName: modelData.songName
                                     songTime: modelData.songTime
-                                    playlistsIndex: playlistName
+                                    playlistsIndex: playlistNameDelegate
                                     onFullPathSong: {
                                         handlePath(path)
+                                    }
+                                    onPlaylistName: {
+                                        handlePlaylists(playlistName)
                                     }
                                     onRemoveSong: {
                                         playlists.removeSongFromPlayList(songName, playlistName)

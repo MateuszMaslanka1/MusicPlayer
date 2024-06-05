@@ -17,11 +17,9 @@ int main(int argc, char *argv[])
     PlaySong playSong;
     Playlists playLists;
 
-
     QObject::connect(&musicPlayer, &MusicPlayer::musicLibraryChanged, &playSong, &PlaySong::updateMusicLibrary);
 
     musicPlayer.findInMusicLibrary();
-    // playLists.loadPlayLists();
 
     engine.rootContext()->setContextProperty("musicPlayer", &musicPlayer);
 

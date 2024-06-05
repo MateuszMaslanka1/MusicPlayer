@@ -1,12 +1,14 @@
 #include "playsong.h"
 #include <QDebug>
 #include<QMediaMetaData>
-PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer(this)) {}
 #include <QFileInfo>
+#include <QSettings>
+PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer(this)) {}
+QVector<QString> getMusicLibraryForPlay;
 QVector<QString> getMusicLibrary;
 
 void PlaySong::setFirstSong() {
-    firstSong = getMusicLibrary[0];
+    firstSong = getMusicLibraryForPlay[0];
 }
 
 QString PlaySong::getFirstSong() {
@@ -59,7 +61,23 @@ void PlaySong::displayDuration(qint64 duration) {
 }
 
 void PlaySong::updateMusicLibrary(const QVector<QString> &musicLibrary) {
+    getMusicLibraryForPlay = musicLibrary;
     getMusicLibrary = musicLibrary;
+}
+
+void PlaySong::getPlaylist(QString playlistName, bool isMUsicLibrary) {
+    if (!isMUsicLibrary) {
+        PlaySong::playlistName = playlistName;
+        getMusicLibraryForPlay.clear();
+        QSettings settings("playLists");
+        QStringList playlist = settings.value(playlistName).toStringList();
+        foreach (const QString &name, playlist) {
+            getMusicLibraryForPlay.append(name);
+        }
+    } else {
+        getMusicLibraryForPlay.clear();
+        getMusicLibraryForPlay = getMusicLibrary;
+    }
 }
 
 void PlaySong::setPosition(qint64 position) {
@@ -89,14 +107,14 @@ void PlaySong::setPosition(qint64 position) {
 }
 
 void PlaySong::backMusic() {
-    if (!getMusicLibrary.isEmpty()) {
-        int currentIndex = getMusicLibrary.indexOf(firstSong);
+    if (!getMusicLibraryForPlay.isEmpty()) {
+        int currentIndex = getMusicLibraryForPlay.indexOf(firstSong);
         if (currentIndex != -1) {
             if (currentIndex > 0) {
-                QString previousSong = getMusicLibrary[currentIndex - 1];
+                QString previousSong = getMusicLibraryForPlay[currentIndex - 1];
                 playSound(previousSong);
             } else {
-                QString lastSong = getMusicLibrary.last();
+                QString lastSong = getMusicLibraryForPlay.last();
                 playSound(lastSong);
             }
         }
@@ -104,14 +122,14 @@ void PlaySong::backMusic() {
 }
 
 void PlaySong::nextMusic() {
-    if (!getMusicLibrary.isEmpty()) {
-        int currentIndex = getMusicLibrary.indexOf(firstSong);
+    if (!getMusicLibraryForPlay.isEmpty()) {
+        int currentIndex = getMusicLibraryForPlay.indexOf(firstSong);
         if (currentIndex != -1) {
-            if (currentIndex < getMusicLibrary.size() - 1) {
-                QString nextSong = getMusicLibrary[currentIndex + 1];
+            if (currentIndex < getMusicLibraryForPlay.size() - 1) {
+                QString nextSong = getMusicLibraryForPlay[currentIndex + 1];
                 playSound(nextSong);
             } else {
-                QString firstSong = getMusicLibrary.first();
+                QString firstSong = getMusicLibraryForPlay.first();
                 playSound(firstSong);
             }
         }

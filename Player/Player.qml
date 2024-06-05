@@ -44,6 +44,12 @@ Item {
                 onHandlePath: {
                     playerController.getPathName = path;
                 }
+                onHandlePlaylists: {
+                    playerController.getPlaylists = playlists;
+                }
+                onHandleIsMusicPlayerPath: {
+                     playerController.getIsMusicLibrary = flag;
+                }
             }
         }
 

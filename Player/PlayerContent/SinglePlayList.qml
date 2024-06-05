@@ -11,6 +11,7 @@ Item {
     property string songTime
     property string playlistsIndex
     signal fullPathSong(string path)
+    signal playlistName(string playlistName)
     signal removeSong(string songName, string playlistName)
     width: parent.width
     height: 50
@@ -34,6 +35,7 @@ Item {
                     height: 35
                     onClicked: {
                         fullPathSong(songName)
+                        playlistName(playlistsIndex)
                     }
                 }
             }
@@ -71,12 +73,12 @@ Item {
                     width: 35
                     height: 35
                     onClicked: {
+                        console.log(playlistsIndex);
                         removeSong(songName, playlistsIndex)
                     }
                 }
             }
         }
-
     }
 
 }

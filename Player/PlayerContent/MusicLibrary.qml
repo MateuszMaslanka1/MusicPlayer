@@ -10,7 +10,7 @@ import Qt.labs.platform 1.0
 Item {
     id: musicPlayerComponent
     anchors.fill: parent
-    signal songName(string name)
+    signal isMusicPlayer(bool isMusicPlayerFlag)
     signal fullPathSong(string path)
 
     ColumnLayout {
@@ -105,7 +105,7 @@ Item {
                                         width: 35
                                         height: 35
                                         onClicked: {
-                                            songName(musicPlayer.someData[index]);
+                                            isMusicPlayer(true);
                                             fullPathSong(musicPlayer.path[index]);
                                         }
                                     }
