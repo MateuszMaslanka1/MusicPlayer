@@ -6,7 +6,6 @@
 PlaySong::PlaySong(QObject *parent) : QObject(parent), m_player(new QMediaPlayer(this)) {}
 QVector<QString> getMusicLibraryForPlay;
 QVector<QString> getMusicLibrary;
-
 void PlaySong::setFirstSong() {
     firstSong = getMusicLibraryForPlay[0];
 }
@@ -38,10 +37,12 @@ void PlaySong::playSound(QString musicPath) {
                     m_player->setPosition(PlaySong::savePosition * 1000);
                     PlaySong::savePosition = 0;
                 }
+
                 QString fileName = QFileInfo(firstSong).fileName();
                 setSongName(fileName);
                 m_player->play();
             }
+
         });
         connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
         m_player->setSource(QUrl::fromLocalFile(firstSong));
@@ -63,6 +64,7 @@ void PlaySong::displayDuration(qint64 duration) {
 void PlaySong::updateMusicLibrary(const QVector<QString> &musicLibrary) {
     getMusicLibraryForPlay = musicLibrary;
     getMusicLibrary = musicLibrary;
+
 }
 
 void PlaySong::getPlaylist(QString playlistName, bool isMUsicLibrary) {
@@ -74,9 +76,11 @@ void PlaySong::getPlaylist(QString playlistName, bool isMUsicLibrary) {
         foreach (const QString &name, playlist) {
             getMusicLibraryForPlay.append(name);
         }
+        PlaySong::isPlayLists = true;
     } else {
         getMusicLibraryForPlay.clear();
         getMusicLibraryForPlay = getMusicLibrary;
+        PlaySong::isPlayLists = false;
     }
 }
 

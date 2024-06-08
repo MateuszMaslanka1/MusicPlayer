@@ -15,6 +15,10 @@ Item {
     signal playlistsName(string playlistsName)
     Playlists {
         id: playlists
+        onPlaylistsChanged: {
+            // Odświeżenie listy playlist
+            playListName.model = playlists.playlistsNameAndSong
+        }
     }
 
     ColumnLayout {
@@ -181,12 +185,16 @@ Item {
                                         radius: 5
                                         color: "#9E9E9E"
                                         Button {
-                                            text: "D"
                                             anchors.centerIn: parent
                                             width: 35
                                             height: 35
                                             onClicked: {
                                                 playlists.deletePlayList(modelData.name)
+                                            }
+                                            contentItem: Image {
+                                                width: 25
+                                                height: 25
+                                                source: "../../icons/trash-fill.svg"
                                             }
                                         }
                                     }

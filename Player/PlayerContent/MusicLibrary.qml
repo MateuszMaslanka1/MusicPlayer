@@ -100,13 +100,18 @@ Item {
                                     radius: 5
                                     color: "#404040"
                                     Button {
-                                        text: "P"
+
                                         anchors.centerIn: parent;
                                         width: 35
                                         height: 35
                                         onClicked: {
                                             isMusicPlayer(true);
                                             fullPathSong(musicPlayer.path[index]);
+                                        }
+                                        contentItem: Image {
+                                            width: 30
+                                            height: 30
+                                            source: "../../icons/play.svg"
                                         }
                                     }
                                 }

@@ -22,6 +22,7 @@ class PlaySong : public QObject
 public:
     int savePosition = 0;
     bool isPause = false;
+    bool isPlayLists = false;
     QString playlistName = "";
     Q_INVOKABLE void setFirstSong();
     explicit PlaySong(QObject *parent = nullptr);

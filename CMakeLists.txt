@@ -33,6 +33,8 @@ qt_add_qml_module(appMusicPlayer
     SOURCES
     SOURCES DecodeMusicData/decodemusicdata.h DecodeMusicData/decodemusicdata.cpp
     SOURCES SongDetails.h
+    RESOURCES icons/play.svg
+    RESOURCES icons/trash-fill.svg
 )
 
 target_link_libraries(appMusicPlayer

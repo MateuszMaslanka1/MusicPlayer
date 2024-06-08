@@ -68,13 +68,17 @@ Item {
                 color: "#404040"
                 radius: 5
                 Button {
-                    text: "P"
                     anchors.centerIn: parent
                     width: 35
                     height: 35
                     onClicked: {
                         console.log(playlistsIndex);
                         removeSong(songName, playlistsIndex)
+                    }
+                    contentItem: Image {
+                        width: 25
+                        height: 25
+                        source: "../../icons/trash-fill.svg"
                     }
                 }
             }

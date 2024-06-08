@@ -97,7 +97,8 @@ Item {
                                 userInteraction = pressed
                             }
                         }
-
+                        onValueChanged: {
+                        }
                     }
                 }
 
@@ -141,8 +142,10 @@ Item {
                     playSong.playSound(playSong.firstSong);
                 }
 
-                contentItem: Text {
-                    text: 'P'
+                contentItem: Image {
+                    width: 30
+                    height: 30
+                    source: "../../icons/play.svg"
                 }
             }
 
