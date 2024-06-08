@@ -35,6 +35,7 @@ qt_add_qml_module(appMusicPlayer
     SOURCES SongDetails.h
     RESOURCES icons/play.svg
     RESOURCES icons/trash-fill.svg
+    RESOURCES icons/skip-backward-fill.svg icons/skip-forward-fill.svg
 )
 
 target_link_libraries(appMusicPlayer

@@ -130,8 +130,10 @@ Item {
                     playSong.backMusic();
                 }
 
-                contentItem: Text {
-                    text: 'B'
+                contentItem: Image {
+                    width: 30
+                    height: 30
+                    source: "../../icons/skip-backward-fill.svg"
                 }
             }
 
@@ -156,8 +158,10 @@ Item {
                     playSong.nextMusic();
                 }
 
-                contentItem: Text {
-                    text: 'N'
+                contentItem: Image {
+                    width: 30
+                    height: 30
+                    source: "../../icons/skip-forward-fill.svg"
                 }
             }
         }

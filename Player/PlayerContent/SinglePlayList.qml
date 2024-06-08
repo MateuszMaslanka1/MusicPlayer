@@ -29,13 +29,17 @@ Item {
                 color: "#404040"
                 radius: 5
                 Button {
-                    text: "P"
                     anchors.centerIn: parent
                     width: 35
                     height: 35
                     onClicked: {
                         fullPathSong(songName)
                         playlistName(playlistsIndex)
+                    }
+                    contentItem: Image {
+                        width: 30
+                        height: 30
+                        source: "../../icons/play.svg"
                     }
                 }
             }
@@ -76,8 +80,8 @@ Item {
                         removeSong(songName, playlistsIndex)
                     }
                     contentItem: Image {
-                        width: 25
-                        height: 25
+                        width: 15
+                        height: 15
                         source: "../../icons/trash-fill.svg"
                     }
                 }
