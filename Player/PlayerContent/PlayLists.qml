@@ -15,10 +15,6 @@ Item {
     signal playlistsName(string playlistsName)
     Playlists {
         id: playlists
-        onPlaylistsChanged: {
-            // Odświeżenie listy playlist
-            playListName.model = playlists.playlistsNameAndSong
-        }
     }
 
     ColumnLayout {
@@ -119,7 +115,7 @@ Item {
                     columns: 1
                     spacing: 10
                     Repeater {
-                        id: playListName
+                        id: playListRepeater
                         model: playlists.playlistsNameAndSong
                         anchors.fill: parent
                         delegate: Flow {
@@ -223,7 +219,6 @@ Item {
             }
         }
     }
-
     Component.onCompleted: {
         playlists.loadPlayLists()
     }
