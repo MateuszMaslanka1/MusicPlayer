@@ -66,5 +66,7 @@ void MusicPlayer::getPathToDirectory(QString pathToDirectory) {
     if (!valueExists) {
         settings.setValue(cleanedPath, cleanedPath);
         qInfo() << "Wartość '" << cleanedPath << "' została pomyślnie zapisana w pliku konfiguracyjnym.";
+        MusicPlayer::findInMusicLibrary();
     }
+
 }

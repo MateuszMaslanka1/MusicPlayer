@@ -46,7 +46,6 @@ Item {
                     text: "Otwórz eksplorator katalogów"
                     Layout.alignment: Qt.AlignRight
                     padding: 10
-
                     Rectangle {
                         width: parent.width
                         height: parent.height
@@ -62,7 +61,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Rectangle {
