@@ -8,11 +8,12 @@ import Qt.labs.platform 1.0
 
 Item {
     property string songName
+    property string songPath
     property string songTime
     property string playlistsIndex
     signal fullPathSong(string path)
     signal playlistName(string playlistName)
-    signal removeSong(string songName, string playlistName)
+    signal removeSong(string songPath, string playlistName)
     width: parent.width
     height: 50
     Rectangle {
@@ -33,7 +34,7 @@ Item {
                     width: 35
                     height: 35
                     onClicked: {
-                        fullPathSong(songName)
+                        fullPathSong(songPath)
                         playlistName(playlistsIndex)
                     }
                     contentItem: Image {
@@ -76,8 +77,7 @@ Item {
                     width: 35
                     height: 35
                     onClicked: {
-                        console.log(playlistsIndex);
-                        removeSong(songName, playlistsIndex)
+                        removeSong(songPath, playlistsIndex)
                     }
                     contentItem: Image {
                         width: 15

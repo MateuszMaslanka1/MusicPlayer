@@ -36,6 +36,8 @@ qt_add_qml_module(appMusicPlayer
     RESOURCES icons/play.svg
     RESOURCES icons/trash-fill.svg
     RESOURCES icons/skip-backward-fill.svg icons/skip-forward-fill.svg
+    RESOURCES icons/pause.svg
+
 )
 
 target_link_libraries(appMusicPlayer

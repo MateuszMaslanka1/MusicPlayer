@@ -66,7 +66,7 @@ Item {
                             }
 
                             Button {
-                                text: "Dodaj utwór"
+                                text: "Dodaj list odtwarzania"
                                 width: parent.width
                                 onClicked: {
                                     playlists.createPlayLists(playListNameInput.text)
@@ -198,8 +198,9 @@ Item {
                             }
                             Repeater {
                                 model: modelData.songs
-                                SinglePlayList{
+                                SinglePlayList {
                                     songName: modelData.songName
+                                    songPath: modelData.songPath
                                     songTime: modelData.songTime
                                     playlistsIndex: playlistNameDelegate
                                     onFullPathSong: {
@@ -209,7 +210,7 @@ Item {
                                         handlePlaylists(playlistName)
                                     }
                                     onRemoveSong: {
-                                        playlists.removeSongFromPlayList(songName, playlistName)
+                                        playlists.removeSongFromPlayList(songPath, playlistName)
                                     }
                                 }
                             }

@@ -18,39 +18,42 @@ Item {
                 anchors.fill: navContainer
                 columns: 1
                 spacing: 5
-                ButtonComponent{
+                ButtonComponent {
+                    id: musicPlayerButton
                     textForButton: 'Music'
                     widthButton: navContainer.width
+                    colorButton: "#363434"
                     heightButton: 50
-
                     MouseArea {
                         cursorShape: Qt.PointingHandCursor
                         anchors.fill: parent
                         hoverEnabled: true
-                        onEntered: parent.color = "#808080"
-                        onExited: parent.color = colorButton
+                        onEntered: musicPlayerButton.colorButton = "#808080"
+                        onExited: musicPlayerButton.colorButton = "#363434"
                         onClicked: {
                             switchToMusic()
                         }
                     }
                 }
-                ButtonComponent{
+                ButtonComponent {
+                    id: playlistButton
                     textForButton: 'Playlist'
                     widthButton: navContainer.width
+                    colorButton: "#363434"
                     heightButton: 50
                     MouseArea {
                         cursorShape: Qt.PointingHandCursor
                         anchors.fill: parent
                         hoverEnabled: true
-                        onEntered: parent.color = "#808080"
-                        onExited: parent.color = colorButton
+                        onEntered: playlistButton.colorButton = "#808080"
+                        onExited: playlistButton.colorButton = "#363434"
                         onClicked: {
+                            playlistButton.colorButton = "#808080"
                             switchToPlaylist()
                         }
                     }
                 }
             }
         }
-
     }
 }

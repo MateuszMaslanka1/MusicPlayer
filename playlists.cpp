@@ -1,6 +1,8 @@
 #include "playlists.h"
 #include "SongDetails.h"
 
+#include <QFileInfo>
+
 Playlists::Playlists(QObject *parent) : QObject{parent} {}
 
 void Playlists::createPlayLists(const QString &playListName) {
@@ -20,7 +22,8 @@ void Playlists::loadPlayLists() {
         songDetails.clear();
         QList<QString> songs = settings.value(key).toStringList();
         foreach (const QString &song, songs) {
-            songDetails.append(new SongDetails(song,decodeMusicData.getSongData(song)));
+            QString fileName = QFileInfo(song).fileName();
+            songDetails.append(new SongDetails(fileName, song,decodeMusicData.getSongData(song)));
         };
         playlists.append(new Playlist(key, songDetails));
     }

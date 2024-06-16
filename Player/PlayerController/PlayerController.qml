@@ -147,7 +147,7 @@ Item {
                 contentItem: Image {
                     width: 30
                     height: 30
-                    source: "../../icons/play.svg"
+                    source: playSong.isPauseToView ?  "../../icons/pause.svg" :  "../../icons/play.svg"
                 }
             }
 

@@ -18,11 +18,13 @@ class PlaySong : public QObject
     Q_PROPERTY(qint64 secondForShowOnLineAll READ secondForShowOnLineAll WRITE setSecondForShowOnLineAll NOTIFY valueOfSecondForShowOnLineAll)
     Q_PROPERTY(QString firstSong READ getFirstSong NOTIFY firstSongChanged)
     Q_PROPERTY(QString songName READ songName WRITE setSongName NOTIFY setSongNameChanged)
+    Q_PROPERTY(bool isPauseToView READ isPauseToView WRITE setIsPause NOTIFY setIsPauseChanged)
 
 public:
     int savePosition = 0;
     bool isPause = false;
     bool isPlayLists = false;
+    QString nextSong;
     QString playlistName = "";
     Q_INVOKABLE void setFirstSong();
     explicit PlaySong(QObject *parent = nullptr);
@@ -35,6 +37,9 @@ public:
     Q_INVOKABLE void backMusic();
     QString getFirstSong() const;
 
+    bool isPauseToView() const {
+        return m_isPauseToView;
+    }
 
     QString second() const {
         return m_second;
@@ -56,6 +61,7 @@ public:
         return m_songName;
     }
 
+
 signals:
     void valueOfSecond();
     void valueOfSecondStart();
@@ -63,6 +69,7 @@ signals:
     void valueOfSecondForShowOnLineAll();
     void firstSongChanged();
     void setSongNameChanged();
+    void setIsPauseChanged();
 
 public slots:
     QString getFirstSong();
@@ -73,6 +80,13 @@ public slots:
         if (m_songName != value) {
             m_songName = value;
             emit setSongNameChanged();
+        }
+    }
+
+    void setIsPause(bool value) {
+        if (m_isPauseToView != value) {
+            m_isPauseToView = value;
+            emit setIsPauseChanged();
         }
     }
 
@@ -114,6 +128,7 @@ private:
     qint64 m_secondForShowOnLineAll;
     QString firstSong;
     QVector<QString> m_getMusicLibrary;
+    bool m_isPauseToView;
 };
 
 #endif // PLAYSONG_H

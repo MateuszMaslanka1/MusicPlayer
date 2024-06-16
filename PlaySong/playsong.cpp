@@ -15,14 +15,19 @@ QString PlaySong::getFirstSong() {
 }
 
 void PlaySong::playSound(QString musicPath) {
+    qInfo() << musicPath;
+    PlaySong::nextSong = musicPath;
     QAudioOutput *audioOutput = new QAudioOutput;
-    if (PlaySong::isPause && musicPath == firstSong) {
+    if (PlaySong::isPause && PlaySong::nextSong == firstSong) {
         m_player->pause();
         PlaySong::savePosition = m_player->position() / 1000;
         PlaySong::isPause = false;
+        emit setIsPause(PlaySong::isPause);
     } else {
-        firstSong = musicPath;
+        firstSong = PlaySong::nextSong;
         m_player->setAudioOutput(audioOutput);
+        disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr);
+        disconnect(m_player, &QMediaPlayer::positionChanged, this, nullptr);
         connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [=](QMediaPlayer::MediaStatus status) {
             if (status == QMediaPlayer::LoadedMedia) {
                 audioOutput->setVolume(10);
@@ -41,12 +46,29 @@ void PlaySong::playSound(QString musicPath) {
                 QString fileName = QFileInfo(firstSong).fileName();
                 setSongName(fileName);
                 m_player->play();
+            } else if (status == QMediaPlayer::EndOfMedia) {
+                if (!getMusicLibraryForPlay.isEmpty()) {
+                    int currentIndex = getMusicLibraryForPlay.indexOf(PlaySong::nextSong);
+                    if (currentIndex != -1) {
+                        if (currentIndex < getMusicLibraryForPlay.size() - 1) {
+                            PlaySong::nextSong = getMusicLibraryForPlay[currentIndex + 1];
+                        } else {
+                            PlaySong::nextSong = getMusicLibraryForPlay.first();
+                        }
+                        PlaySong::isPause = true;
+                        emit setIsPause(PlaySong::isPause);
+                        firstSong = PlaySong::nextSong;
+                        QString fileName = QFileInfo(PlaySong::nextSong).fileName();
+                        qInfo() << "Next Song:" << fileName;
+                        m_player->setSource(QUrl::fromLocalFile(PlaySong::nextSong));
+                    }
+                }
             }
-
         });
         connect(m_player, &QMediaPlayer::positionChanged, this, &PlaySong::displayDuration);
         m_player->setSource(QUrl::fromLocalFile(firstSong));
         PlaySong::isPause = true;
+        emit setIsPause(PlaySong::isPause);
     }
 }
 
@@ -58,6 +80,7 @@ void PlaySong::displayDuration(qint64 duration) {
     emit setSecondForShowOnLine(durationInSeconds);
     if (durationInSeconds == m_player->duration() / 1000) {
         PlaySong::isPause = false;
+        emit setIsPause(PlaySong::isPause);
     }
 }
 
@@ -77,10 +100,12 @@ void PlaySong::getPlaylist(QString playlistName, bool isMUsicLibrary) {
             getMusicLibraryForPlay.append(name);
         }
         PlaySong::isPlayLists = true;
+        emit setIsPause(PlaySong::isPause);
     } else {
         getMusicLibraryForPlay.clear();
         getMusicLibraryForPlay = getMusicLibrary;
         PlaySong::isPlayLists = false;
+        emit setIsPause(PlaySong::isPause);
     }
 }
 
@@ -92,6 +117,7 @@ void PlaySong::setPosition(qint64 position) {
 
     if(!PlaySong::isPause) {
         PlaySong::isPause = true;
+        emit setIsPause(PlaySong::isPause);
     }
 
     QMediaPlayer::MediaStatus mediaStatus = m_player->mediaStatus();
