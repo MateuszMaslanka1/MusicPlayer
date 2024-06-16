@@ -12,7 +12,7 @@ Item {
     property string getPathName: ""
     property string getPlaylists: ""
     property bool getIsMusicLibrary: false
-
+    property bool isEnabled: false
     PlaySong {
         id: playSong
     }
@@ -89,6 +89,7 @@ Item {
                         to: playSong.secondForShowOnLineAll
                         value: !userInteraction ? playSong.secondForShowOnLine : ''
                         property bool userInteraction: false
+                        enabled: isEnabled
                         onPressedChanged: {
                             if (!pressed) {
                                 playSong.setPosition(value)
@@ -98,6 +99,7 @@ Item {
                             }
                         }
                         onValueChanged: {
+                            timeSlider.enabled = true
                         }
                     }
                 }
