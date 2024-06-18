@@ -14,16 +14,18 @@ QString PlaySong::getFirstSong() {
     return firstSong;
 }
 
-void PlaySong::playSound(QString musicPath) {
-    qInfo() << musicPath;
+void PlaySong::playSound(QString musicPath, bool isFromControler) {
     PlaySong::nextSong = musicPath;
     QAudioOutput *audioOutput = new QAudioOutput;
-    if (PlaySong::isPause && PlaySong::nextSong == firstSong) {
+    if (PlaySong::isPause && PlaySong::nextSong == firstSong && isFromControler) {
         m_player->pause();
         PlaySong::savePosition = m_player->position() / 1000;
         PlaySong::isPause = false;
         emit setIsPause(PlaySong::isPause);
     } else {
+        if (!isFromControler) {
+            m_player->stop();
+        }
         firstSong = PlaySong::nextSong;
         m_player->setAudioOutput(audioOutput);
         disconnect(m_player, &QMediaPlayer::mediaStatusChanged, this, nullptr);
@@ -59,7 +61,6 @@ void PlaySong::playSound(QString musicPath) {
                         emit setIsPause(PlaySong::isPause);
                         firstSong = PlaySong::nextSong;
                         QString fileName = QFileInfo(PlaySong::nextSong).fileName();
-                        qInfo() << "Next Song:" << fileName;
                         m_player->setSource(QUrl::fromLocalFile(PlaySong::nextSong));
                     }
                 }
@@ -142,10 +143,10 @@ void PlaySong::backMusic() {
         if (currentIndex != -1) {
             if (currentIndex > 0) {
                 QString previousSong = getMusicLibraryForPlay[currentIndex - 1];
-                playSound(previousSong);
+                playSound(previousSong,false);
             } else {
                 QString lastSong = getMusicLibraryForPlay.last();
-                playSound(lastSong);
+                playSound(lastSong,false);
             }
         }
     }
@@ -157,10 +158,10 @@ void PlaySong::nextMusic() {
         if (currentIndex != -1) {
             if (currentIndex < getMusicLibraryForPlay.size() - 1) {
                 QString nextSong = getMusicLibraryForPlay[currentIndex + 1];
-                playSound(nextSong);
+                playSound(nextSong,false);
             } else {
                 QString firstSong = getMusicLibraryForPlay.first();
-                playSound(firstSong);
+                playSound(firstSong,false);
             }
         }
     }

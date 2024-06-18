@@ -23,7 +23,7 @@ Item {
 
     onGetPathNameChanged: {
         if (getPathName) {
-            playSong.playSound(getPathName);
+            playSong.playSound(getPathName, false);
         }
         getPathName = "";
     }
@@ -143,7 +143,7 @@ Item {
                 width: 35
                 height: 35
                 onClicked: {
-                    playSong.playSound(playSong.firstSong);
+                    playSong.playSound(playSong.firstSong,true);
                 }
 
                 contentItem: Image {

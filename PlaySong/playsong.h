@@ -30,7 +30,7 @@ public:
     explicit PlaySong(QObject *parent = nullptr);
     void threadForPlaySound();
     std::string getSongDuration(const std::string& filePath);
-    Q_INVOKABLE void playSound(QString musicPath);
+    Q_INVOKABLE void playSound(QString musicPath, bool isFromControler);
     Q_INVOKABLE void getPlaylist(QString playlistName, bool isMUsicLibrary);
     Q_INVOKABLE void setPosition(qint64 position);
     Q_INVOKABLE void nextMusic();
@@ -128,7 +128,7 @@ private:
     qint64 m_secondForShowOnLineAll;
     QString firstSong;
     QVector<QString> m_getMusicLibrary;
-    bool m_isPauseToView;
+    bool m_isPauseToView = false;
 };
 
 #endif // PLAYSONG_H
