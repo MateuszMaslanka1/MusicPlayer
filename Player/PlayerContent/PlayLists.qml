@@ -152,6 +152,7 @@ Item {
                                                 FileDialog {
                                                     id: fileDialog
                                                     title: "Please choose a file"
+                                                     nameFilters: ["Pliki MP3 (*.mp3)"]
                                                     onAccepted: {
                                                         playlists.addSongToPlayList(playlists.playlistsNameAndSong[index].name, fileDialog.currentFile)
                                                     }
