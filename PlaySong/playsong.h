@@ -61,7 +61,7 @@ public:
         return m_songName;
     }
 
-
+    Q_INVOKABLE void stopMusic(QString getSingnalStopMusic);
 signals:
     void valueOfSecond();
     void valueOfSecondStart();

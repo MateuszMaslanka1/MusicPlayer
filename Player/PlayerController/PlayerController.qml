@@ -11,6 +11,7 @@ Item {
     height: root.height
     property string getPathName: ""
     property string getPlaylists: ""
+    property string getSingnalStopMusic: ""
     property bool getIsMusicLibrary: false
     property bool isEnabled: false
     PlaySong {
@@ -20,6 +21,7 @@ Item {
     Component.onCompleted: {
         playSong.setFirstSong();
     }
+
 
     onGetPathNameChanged: {
         if (getPathName) {
@@ -40,6 +42,15 @@ Item {
             playSong.getPlaylist(getPlaylists, getIsMusicLibrary);
         }
         getPlaylists = "";
+    }
+
+    onGetSingnalStopMusicChanged: {
+        if (getSingnalStopMusic) {
+            playSong.stopMusic(getSingnalStopMusic);
+        }
+        getSingnalStopMusic = "";
+        getPlaylists = "";
+        getIsMusicLibrary = true;
     }
 
     Rectangle {

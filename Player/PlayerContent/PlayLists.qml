@@ -13,6 +13,8 @@ Item {
     anchors.fill: parent
     signal fullPathSong(string path)
     signal playlistsName(string playlistsName)
+    signal stopMusic(string stop)
+
     Playlists {
         id: playlists
     }
@@ -147,7 +149,6 @@ Item {
                                                 width: parent.width
                                                 height: parent.height
                                                 color: parent.hovered ? "#808080" : "#363434"
-
                                                 FileDialog {
                                                     id: fileDialog
                                                     title: "Please choose a file"
@@ -185,6 +186,7 @@ Item {
                                             width: 35
                                             height: 35
                                             onClicked: {
+                                                stopMusic(playlistNameDelegate)
                                                 playlists.deletePlayList(modelData.name)
                                             }
                                             contentItem: Image {
@@ -210,6 +212,7 @@ Item {
                                         handlePlaylists(playlistName)
                                     }
                                     onRemoveSong: {
+                                        stopMusic(playlistNameDelegate)
                                         playlists.removeSongFromPlayList(songPath, playlistName)
                                     }
                                 }

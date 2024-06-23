@@ -88,10 +88,27 @@ void PlaySong::displayDuration(qint64 duration) {
 void PlaySong::updateMusicLibrary(const QVector<QString> &musicLibrary) {
     getMusicLibraryForPlay = musicLibrary;
     getMusicLibrary = musicLibrary;
+}
 
+void PlaySong::stopMusic(QString getSingnalStopMusic) {
+    qInfo() << getSingnalStopMusic;
+    if (m_player->playbackState() != QMediaPlayer::StoppedState && getSingnalStopMusic == PlaySong::playlistName) {
+        isPause = false;
+        emit setIsPause(isPause);
+        getMusicLibraryForPlay.clear();
+        getMusicLibraryForPlay = getMusicLibrary;
+        m_player->setPosition(0);
+        PlaySong::setFirstSong();
+        QString fileName = QFileInfo(firstSong).fileName();
+        setSongName(fileName);
+        PlaySong::playlistName = "";
+        delete m_player;
+        m_player = new QMediaPlayer(this);
+    }
 }
 
 void PlaySong::getPlaylist(QString playlistName, bool isMUsicLibrary) {
+    qInfo() << playlistName;
     if (!isMUsicLibrary) {
         PlaySong::playlistName = playlistName;
         getMusicLibraryForPlay.clear();
@@ -138,6 +155,7 @@ void PlaySong::setPosition(qint64 position) {
 }
 
 void PlaySong::backMusic() {
+    qInfo() << getMusicLibraryForPlay;
     if (!getMusicLibraryForPlay.isEmpty()) {
         int currentIndex = getMusicLibraryForPlay.indexOf(firstSong);
         if (currentIndex != -1) {

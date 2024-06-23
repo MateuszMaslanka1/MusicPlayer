@@ -41,6 +41,9 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width * 0.80
+                onHandleStopMusic: {
+                    playerController.getSingnalStopMusic = stop;
+                }
                 onHandlePath: {
                     playerController.getPathName = path;
                 }
@@ -48,7 +51,7 @@ Item {
                     playerController.getPlaylists = playlists;
                 }
                 onHandleIsMusicPlayerPath: {
-                     playerController.getIsMusicLibrary = flag;
+                    playerController.getIsMusicLibrary = flag;
                 }
             }
         }

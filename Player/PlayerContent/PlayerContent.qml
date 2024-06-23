@@ -13,6 +13,7 @@ Item {
     signal handlePath(string path)
     signal handlePlaylists(string playlists)
     signal handleIsMusicPlayerPath(bool flag)
+    signal handleStopMusic(string stop);
     Rectangle {
         anchors.fill: parent
         color: "#202020"
@@ -49,6 +50,9 @@ Item {
             }
             onPlaylistsName: {
                handlePlaylists(playlists)
+            }
+            onStopMusic: {
+                handleStopMusic(stop)
             }
         }
     }
