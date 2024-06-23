@@ -108,7 +108,6 @@ void PlaySong::stopMusic(QString getSingnalStopMusic) {
 }
 
 void PlaySong::getPlaylist(QString playlistName, bool isMUsicLibrary) {
-    qInfo() << playlistName;
     if (!isMUsicLibrary) {
         PlaySong::playlistName = playlistName;
         getMusicLibraryForPlay.clear();
@@ -155,7 +154,6 @@ void PlaySong::setPosition(qint64 position) {
 }
 
 void PlaySong::backMusic() {
-    qInfo() << getMusicLibraryForPlay;
     if (!getMusicLibraryForPlay.isEmpty()) {
         int currentIndex = getMusicLibraryForPlay.indexOf(firstSong);
         if (currentIndex != -1) {
